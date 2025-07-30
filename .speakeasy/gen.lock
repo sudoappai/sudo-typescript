@@ -1,0 +1,315 @@
+lockVersion: 2.0.0
+id: b050a591-ed84-4aa9-98e8-1a6acbdbbc1c
+management:
+  docChecksum: 50facc2951988edfdef311eef5b607eb
+  docVersion: 0.1.0
+  speakeasyVersion: 1.590.0
+  generationVersion: 2.666.0
+  releaseVersion: 0.0.1
+  configChecksum: b94dfac8a47be2ad693931f35b2cae88
+features:
+  typescript:
+    additionalDependencies: 0.1.0
+    constsAndDefaults: 0.1.12
+    core: 3.21.15
+    defaultEnabledRetries: 0.1.0
+    devContainers: 2.90.0
+    enumUnions: 0.1.0
+    envVarSecurityUsage: 0.1.2
+    globalSecurity: 2.82.13
+    globalSecurityCallbacks: 0.1.0
+    globalSecurityFlattening: 0.1.0
+    globalServerURLs: 2.82.5
+    methodArguments: 0.1.2
+    nullables: 0.1.1
+    responseFormat: 0.2.3
+    retries: 2.83.0
+    sdkHooks: 0.3.0
+    serverEvents: 0.1.6
+    serverEventsSentinels: 0.1.0
+    unions: 2.85.11
+generatedFiles:
+  - .devcontainer/README.md
+  - .devcontainer/devcontainer.json
+  - .devcontainer/setup.sh
+  - .gitattributes
+  - .npmignore
+  - FUNCTIONS.md
+  - RUNTIMES.md
+  - USAGE.md
+  - docs/lib/utils/retryconfig.md
+  - docs/models/chatcompletion.md
+  - docs/models/chatcompletionchunk.md
+  - docs/models/chatcompletionchunkchoice.md
+  - docs/models/chatcompletiondelta.md
+  - docs/models/chatcompletionlist.md
+  - docs/models/chatcompletionrequestjson.md
+  - docs/models/chatcompletionrequestjsonaudio.md
+  - docs/models/chatcompletionrequestjsonformat.md
+  - docs/models/chatcompletionrequestjsonfunction.md
+  - docs/models/chatcompletionrequestjsonjsonschema.md
+  - docs/models/chatcompletionrequestjsonmodality.md
+  - docs/models/chatcompletionrequestjsonprediction.md
+  - docs/models/chatcompletionrequestjsonreasoningeffort.md
+  - docs/models/chatcompletionrequestjsonresponseformatjsonobject.md
+  - docs/models/chatcompletionrequestjsonresponseformatjsonschema.md
+  - docs/models/chatcompletionrequestjsonresponseformattext.md
+  - docs/models/chatcompletionrequestjsonresponseformatunion.md
+  - docs/models/chatcompletionrequestjsonservicetier.md
+  - docs/models/chatcompletionrequestjsonstreamoptions.md
+  - docs/models/chatcompletionrequestjsontoolchoiceenum.md
+  - docs/models/chatcompletionrequestjsontoolchoicefunction.md
+  - docs/models/chatcompletionrequestjsontoolchoicetype.md
+  - docs/models/chatcompletionrequestjsontoolchoiceunion.md
+  - docs/models/chatcompletionrequestjsontypecontent.md
+  - docs/models/chatcompletionrequestjsontypejsonobject.md
+  - docs/models/chatcompletionrequestjsontypejsonschema.md
+  - docs/models/chatcompletionrequestjsontypetext.md
+  - docs/models/chatcompletionrequestjsonvoice.md
+  - docs/models/chatcompletionrequeststream.md
+  - docs/models/chatcompletionrequeststreamaudio.md
+  - docs/models/chatcompletionrequeststreamformat.md
+  - docs/models/chatcompletionrequeststreamfunction.md
+  - docs/models/chatcompletionrequeststreamjsonschema.md
+  - docs/models/chatcompletionrequeststreammodality.md
+  - docs/models/chatcompletionrequeststreamprediction.md
+  - docs/models/chatcompletionrequeststreamreasoningeffort.md
+  - docs/models/chatcompletionrequeststreamresponseformatjsonobject.md
+  - docs/models/chatcompletionrequeststreamresponseformatjsonschema.md
+  - docs/models/chatcompletionrequeststreamresponseformattext.md
+  - docs/models/chatcompletionrequeststreamresponseformatunion.md
+  - docs/models/chatcompletionrequeststreamservicetier.md
+  - docs/models/chatcompletionrequeststreamstreamoptions.md
+  - docs/models/chatcompletionrequeststreamtoolchoiceenum.md
+  - docs/models/chatcompletionrequeststreamtoolchoicefunction.md
+  - docs/models/chatcompletionrequeststreamtoolchoicetype.md
+  - docs/models/chatcompletionrequeststreamtoolchoiceunion.md
+  - docs/models/chatcompletionrequeststreamtypecontent.md
+  - docs/models/chatcompletionrequeststreamtypejsonobject.md
+  - docs/models/chatcompletionrequeststreamtypejsonschema.md
+  - docs/models/chatcompletionrequeststreamtypetext.md
+  - docs/models/chatcompletionrequeststreamvoice.md
+  - docs/models/chatdeletionconfirmation.md
+  - docs/models/chatmessage.md
+  - docs/models/chatmessagelist.md
+  - docs/models/choice.md
+  - docs/models/contentpart1.md
+  - docs/models/contentpart2.md
+  - docs/models/contentpart3.md
+  - docs/models/contentpart4.md
+  - docs/models/contentpartunion.md
+  - docs/models/data.md
+  - docs/models/errordetail.md
+  - docs/models/errors/errorresponse.md
+  - docs/models/filet.md
+  - docs/models/finishreason.md
+  - docs/models/functiont.md
+  - docs/models/imageurl.md
+  - docs/models/inputaudio.md
+  - docs/models/logprobs.md
+  - docs/models/messagecontent.md
+  - docs/models/messageresponse.md
+  - docs/models/objectt.md
+  - docs/models/operations/deletechatcompletionrequest.md
+  - docs/models/operations/getchatcompletionmessagesrequest.md
+  - docs/models/operations/getchatcompletionrequest.md
+  - docs/models/operations/listchatcompletionsrequest.md
+  - docs/models/operations/updatechatcompletionrequest.md
+  - docs/models/operations/updatechatcompletionrequestbody.md
+  - docs/models/returnedchatmessages.md
+  - docs/models/role.md
+  - docs/models/security.md
+  - docs/models/supportedmodel.md
+  - docs/models/supportedmodelslist.md
+  - docs/models/tool.md
+  - docs/models/toolcall.md
+  - docs/models/toolcallfunction.md
+  - docs/models/usage.md
+  - docs/sdks/router/README.md
+  - docs/sdks/sudo/README.md
+  - docs/sdks/system/README.md
+  - eslint.config.mjs
+  - examples/.env.template
+  - examples/README.md
+  - examples/package.json
+  - examples/systemHealthCheck.example.ts
+  - jsr.json
+  - package.json
+  - src/core.ts
+  - src/funcs/routerCreate.ts
+  - src/funcs/routerCreateStreaming.ts
+  - src/funcs/routerDeleteChatCompletion.ts
+  - src/funcs/routerGetChatCompletion.ts
+  - src/funcs/routerGetChatCompletionMessages.ts
+  - src/funcs/routerListChatCompletions.ts
+  - src/funcs/routerUpdateChatCompletion.ts
+  - src/funcs/systemGetSupportedModels.ts
+  - src/funcs/systemHealthCheck.ts
+  - src/hooks/hooks.ts
+  - src/hooks/index.ts
+  - src/hooks/types.ts
+  - src/index.ts
+  - src/lib/base64.ts
+  - src/lib/config.ts
+  - src/lib/dlv.ts
+  - src/lib/encodings.ts
+  - src/lib/env.ts
+  - src/lib/event-streams.ts
+  - src/lib/files.ts
+  - src/lib/http.ts
+  - src/lib/is-plain-object.ts
+  - src/lib/logger.ts
+  - src/lib/matchers.ts
+  - src/lib/primitives.ts
+  - src/lib/retries.ts
+  - src/lib/schemas.ts
+  - src/lib/sdks.ts
+  - src/lib/security.ts
+  - src/lib/url.ts
+  - src/models/chatcompletion.ts
+  - src/models/chatcompletionchunk.ts
+  - src/models/chatcompletionchunkchoice.ts
+  - src/models/chatcompletiondelta.ts
+  - src/models/chatcompletionlist.ts
+  - src/models/chatcompletionrequestjson.ts
+  - src/models/chatcompletionrequeststream.ts
+  - src/models/chatdeletionconfirmation.ts
+  - src/models/chatmessage.ts
+  - src/models/chatmessagelist.ts
+  - src/models/choice.ts
+  - src/models/contentpartunion.ts
+  - src/models/errordetail.ts
+  - src/models/errors/errorresponse.ts
+  - src/models/errors/httpclienterrors.ts
+  - src/models/errors/index.ts
+  - src/models/errors/responsevalidationerror.ts
+  - src/models/errors/sdkvalidationerror.ts
+  - src/models/errors/sudodefaulterror.ts
+  - src/models/errors/sudoerror.ts
+  - src/models/function.ts
+  - src/models/index.ts
+  - src/models/messagecontent.ts
+  - src/models/messageresponse.ts
+  - src/models/operations/deletechatcompletion.ts
+  - src/models/operations/getchatcompletion.ts
+  - src/models/operations/getchatcompletionmessages.ts
+  - src/models/operations/index.ts
+  - src/models/operations/listchatcompletions.ts
+  - src/models/operations/updatechatcompletion.ts
+  - src/models/returnedchatmessages.ts
+  - src/models/security.ts
+  - src/models/supportedmodel.ts
+  - src/models/supportedmodelslist.ts
+  - src/models/tool.ts
+  - src/models/toolcall.ts
+  - src/models/toolcallfunction.ts
+  - src/models/usage.ts
+  - src/sdk/index.ts
+  - src/sdk/router.ts
+  - src/sdk/sdk.ts
+  - src/sdk/system.ts
+  - src/types/async.ts
+  - src/types/blobs.ts
+  - src/types/constdatetime.ts
+  - src/types/enums.ts
+  - src/types/fp.ts
+  - src/types/index.ts
+  - src/types/operations.ts
+  - src/types/rfcdate.ts
+  - src/types/streams.ts
+  - tsconfig.json
+examples:
+  healthCheck:
+    speakeasy-default-health-check:
+      responses:
+        "200":
+          application/json: "<value>"
+  getSupportedModels:
+    speakeasy-default-get-supported-models:
+      responses:
+        "200":
+          application/json: {"data": [], "first_id": "<id>", "has_more": false, "last_id": "<id>"}
+        "401":
+          application/json: {"error": {"message": "<value>", "type": "<value>"}}
+        "500":
+          application/json: {"error": {"message": "<value>", "type": "<value>"}}
+  listChatCompletions:
+    speakeasy-default-list-chat-completions:
+      responses:
+        "200":
+          application/json: {"data": [{"choices": [{"finish_reason": "<value>", "index": 592199, "message": {"role": "<value>"}}], "created": 590687, "id": "<id>", "model": "Fiesta", "object": "<value>", "usage": {"completion_tokens": 301698, "prompt_tokens": 970006, "total_tokens": 767963}}], "first_id": "<id>", "has_more": true, "last_id": "<id>", "object": "<value>"}
+        "401":
+          application/json: {"error": {"message": "<value>", "type": "<value>"}}
+        "500":
+          application/json: {"error": {"message": "<value>", "type": "<value>"}}
+  create:
+    speakeasy-default-create:
+      requestBody:
+        application/json: {"messages": [], "model": "Camry", "stream": false}
+      responses:
+        "200":
+          application/json: {"choices": [], "created": 927041, "id": "<id>", "model": "Prius", "object": "<value>", "usage": {"completion_tokens": 511854, "prompt_tokens": 537178, "total_tokens": 354609}}
+        "400":
+          application/json: {"error": {"message": "<value>", "type": "<value>"}}
+        "500":
+          application/json: {"error": {"message": "<value>", "type": "<value>"}}
+  createStreaming:
+    speakeasy-default-create-streaming:
+      requestBody:
+        application/json: {"messages": [{"content": "<value>", "role": "<value>"}], "model": "PT Cruiser", "stream": true}
+      responses:
+        "400":
+          application/json: {"error": {"message": "<value>", "type": "<value>"}}
+        "500":
+          application/json: {"error": {"message": "<value>", "type": "<value>"}}
+  getChatCompletion:
+    speakeasy-default-get-chat-completion:
+      parameters:
+        path:
+          completion_id: "<id>"
+      responses:
+        "200":
+          application/json: {"choices": [], "created": 491714, "id": "<id>", "model": "Altima", "object": "<value>", "usage": {"completion_tokens": 672472, "prompt_tokens": 378188, "total_tokens": 386968}}
+        "400":
+          application/json: {"error": {"message": "<value>", "type": "<value>"}}
+        "500":
+          application/json: {"error": {"message": "<value>", "type": "<value>"}}
+  updateChatCompletion:
+    speakeasy-default-update-chat-completion:
+      parameters:
+        path:
+          completion_id: "<id>"
+      requestBody:
+        application/json: {"metadata": {}}
+      responses:
+        "200":
+          application/json: {"choices": [{"finish_reason": "<value>", "index": 521048, "message": {"role": "<value>"}}], "created": 998544, "id": "<id>", "model": "PT Cruiser", "object": "<value>", "usage": {"completion_tokens": 997875, "prompt_tokens": 124510, "total_tokens": 648236}}
+        "400":
+          application/json: {"error": {"message": "<value>", "type": "<value>"}}
+        "500":
+          application/json: {"error": {"message": "<value>", "type": "<value>"}}
+  deleteChatCompletion:
+    speakeasy-default-delete-chat-completion:
+      parameters:
+        path:
+          completion_id: "<id>"
+      responses:
+        "200":
+          application/json: {"deleted": false, "id": "<id>", "object": "<value>"}
+        "400":
+          application/json: {"error": {"message": "<value>", "type": "<value>"}}
+        "500":
+          application/json: {"error": {"message": "<value>", "type": "<value>"}}
+  getChatCompletionMessages:
+    speakeasy-default-get-chat-completion-messages:
+      parameters:
+        path:
+          completion_id: "<id>"
+      responses:
+        "200":
+          application/json: {"data": [], "first_id": "<id>", "has_more": false, "last_id": "<id>", "object": "<value>"}
+        "400":
+          application/json: {"error": {"message": "<value>", "type": "<value>"}}
+        "500":
+          application/json: {"error": {"message": "<value>", "type": "<value>"}}
+examplesVersion: 1.0.2

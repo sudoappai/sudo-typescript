@@ -1,0 +1,19 @@
+workflowVersion: 1.0.0
+speakeasyVersion: latest
+sources:
+    sudo-api:
+        inputs:
+            - location: ../openapi.json
+        output: .speakeasy/out.openapi.yaml
+        registry:
+            location: registry.speakeasyapi.dev/sudo/sudo/sudo-api
+targets:
+    sudo:
+        target: typescript
+        source: sudo-api
+        codeSamples:
+            registry:
+                location: registry.speakeasyapi.dev/sudo/sudo/sudo-api-typescript-code-samples
+            labelOverride:
+                fixedValue: Typescript (SDK)
+            blocking: false

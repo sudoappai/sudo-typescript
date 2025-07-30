@@ -1,0 +1,19 @@
+# ListChatCompletionsRequest
+
+## Example Usage
+
+```typescript
+import { ListChatCompletionsRequest } from "sudo/models/operations";
+
+let value: ListChatCompletionsRequest = {};
+```
+
+## Fields
+
+| Field                                                                                                                    | Type                                                                                                                     | Required                                                                                                                 | Description                                                                                                              |
+| ------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------ |
+| `after`                                                                                                                  | *string*                                                                                                                 | :heavy_minus_sign:                                                                                                       | Identifier for the last chat completion from the previous pagination request.                                            |
+| `limit`                                                                                                                  | *number*                                                                                                                 | :heavy_minus_sign:                                                                                                       | Number of Chat Completions to retrieve.                                                                                  |
+| `metadata`                                                                                                               | Record<string, *string*>                                                                                                 | :heavy_minus_sign:                                                                                                       | A list of metadata keys to filter the Chat Completions by. Example: metadata[key1]=value1&metadata[key2]=value2          |
+| `model`                                                                                                                  | *string*                                                                                                                 | :heavy_minus_sign:                                                                                                       | The model used to generate the Chat Completions.                                                                         |
+| `order`                                                                                                                  | *string*                                                                                                                 | :heavy_minus_sign:                                                                                                       | Sort order for Chat Completions by timestamp. Use asc for ascending order or desc for descending order. Defaults to asc. |
