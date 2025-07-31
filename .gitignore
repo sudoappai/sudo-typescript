@@ -28,3 +28,23 @@
 .env
 .env.local
 .env.*.local
+
+# Environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+
+# VSCode
+.vscode/
+
+# Speakeasy
+.speakeasy/
+
+# macOS
+.DS_Store
+

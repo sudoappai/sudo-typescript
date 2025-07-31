@@ -1,17 +1,17 @@
 lockVersion: 2.0.0
 id: b050a591-ed84-4aa9-98e8-1a6acbdbbc1c
 management:
-  docChecksum: 50facc2951988edfdef311eef5b607eb
+  docChecksum: e7dd06231e1be4f86e68e259547d5d5a
   docVersion: 0.1.0
-  speakeasyVersion: 1.590.0
-  generationVersion: 2.666.0
-  releaseVersion: 0.0.1
-  configChecksum: b94dfac8a47be2ad693931f35b2cae88
+  speakeasyVersion: 1.592.2
+  generationVersion: 2.668.4
+  releaseVersion: 0.0.2
+  configChecksum: 089ad34eedf6b3e52108dfd3d4587558
 features:
   typescript:
     additionalDependencies: 0.1.0
     constsAndDefaults: 0.1.12
-    core: 3.21.15
+    core: 3.21.17
     defaultEnabledRetries: 0.1.0
     devContainers: 2.90.0
     enumUnions: 0.1.0
@@ -41,6 +41,7 @@ generatedFiles:
   - docs/models/chatcompletion.md
   - docs/models/chatcompletionchunk.md
   - docs/models/chatcompletionchunkchoice.md
+  - docs/models/chatcompletionchunkusage.md
   - docs/models/chatcompletiondelta.md
   - docs/models/chatcompletionlist.md
   - docs/models/chatcompletionrequestjson.md
@@ -125,6 +126,7 @@ generatedFiles:
   - docs/models/toolcall.md
   - docs/models/toolcallfunction.md
   - docs/models/usage.md
+  - docs/models/usageunion.md
   - docs/sdks/router/README.md
   - docs/sdks/sudo/README.md
   - docs/sdks/system/README.md

@@ -14,12 +14,6 @@ import {
   ChatCompletionChunkChoice$outboundSchema,
 } from "./chatcompletionchunkchoice.js";
 import { SDKValidationError } from "./errors/sdkvalidationerror.js";
-import {
-  Usage,
-  Usage$inboundSchema,
-  Usage$Outbound,
-  Usage$outboundSchema,
-} from "./usage.js";
 
 /**
  * The object type, which is always 'chat.completion.chunk'.
@@ -31,6 +25,19 @@ export const ObjectT = {
  * The object type, which is always 'chat.completion.chunk'.
  */
 export type ObjectT = ClosedEnum<typeof ObjectT>;
+
+export type ChatCompletionChunkUsage = {
+  completionTokens: number;
+  completionTokensDetails?: any | undefined;
+  promptTokens: number;
+  promptTokensDetails?: any | undefined;
+  totalTokens: number;
+};
+
+/**
+ * Usage statistics for the completion request. Only present in the final chunk when stream_options.include_usage is set.
+ */
+export type UsageUnion = ChatCompletionChunkUsage;
 
 export type Data = {
   /**
@@ -57,7 +64,10 @@ export type Data = {
    * A list of chat completion choices.
    */
   choices: Array<ChatCompletionChunkChoice>;
-  usage?: Usage | undefined;
+  /**
+   * Usage statistics for the completion request. Only present in the final chunk when stream_options.include_usage is set.
+   */
+  usage?: ChatCompletionChunkUsage | null | undefined;
 };
 
 export type ChatCompletionChunk = {
@@ -84,6 +94,132 @@ export namespace ObjectT$ {
 }
 
 /** @internal */
+export const ChatCompletionChunkUsage$inboundSchema: z.ZodType<
+  ChatCompletionChunkUsage,
+  z.ZodTypeDef,
+  unknown
+> = z.object({
+  completion_tokens: z.number().int(),
+  completion_tokens_details: z.any().optional(),
+  prompt_tokens: z.number().int(),
+  prompt_tokens_details: z.any().optional(),
+  total_tokens: z.number().int(),
+}).transform((v) => {
+  return remap$(v, {
+    "completion_tokens": "completionTokens",
+    "completion_tokens_details": "completionTokensDetails",
+    "prompt_tokens": "promptTokens",
+    "prompt_tokens_details": "promptTokensDetails",
+    "total_tokens": "totalTokens",
+  });
+});
+
+/** @internal */
+export type ChatCompletionChunkUsage$Outbound = {
+  completion_tokens: number;
+  completion_tokens_details?: any | undefined;
+  prompt_tokens: number;
+  prompt_tokens_details?: any | undefined;
+  total_tokens: number;
+};
+
+/** @internal */
+export const ChatCompletionChunkUsage$outboundSchema: z.ZodType<
+  ChatCompletionChunkUsage$Outbound,
+  z.ZodTypeDef,
+  ChatCompletionChunkUsage
+> = z.object({
+  completionTokens: z.number().int(),
+  completionTokensDetails: z.any().optional(),
+  promptTokens: z.number().int(),
+  promptTokensDetails: z.any().optional(),
+  totalTokens: z.number().int(),
+}).transform((v) => {
+  return remap$(v, {
+    completionTokens: "completion_tokens",
+    completionTokensDetails: "completion_tokens_details",
+    promptTokens: "prompt_tokens",
+    promptTokensDetails: "prompt_tokens_details",
+    totalTokens: "total_tokens",
+  });
+});
+
+/**
+ * @internal
+ * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
+ */
+export namespace ChatCompletionChunkUsage$ {
+  /** @deprecated use `ChatCompletionChunkUsage$inboundSchema` instead. */
+  export const inboundSchema = ChatCompletionChunkUsage$inboundSchema;
+  /** @deprecated use `ChatCompletionChunkUsage$outboundSchema` instead. */
+  export const outboundSchema = ChatCompletionChunkUsage$outboundSchema;
+  /** @deprecated use `ChatCompletionChunkUsage$Outbound` instead. */
+  export type Outbound = ChatCompletionChunkUsage$Outbound;
+}
+
+export function chatCompletionChunkUsageToJSON(
+  chatCompletionChunkUsage: ChatCompletionChunkUsage,
+): string {
+  return JSON.stringify(
+    ChatCompletionChunkUsage$outboundSchema.parse(chatCompletionChunkUsage),
+  );
+}
+
+export function chatCompletionChunkUsageFromJSON(
+  jsonString: string,
+): SafeParseResult<ChatCompletionChunkUsage, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => ChatCompletionChunkUsage$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'ChatCompletionChunkUsage' from JSON`,
+  );
+}
+
+/** @internal */
+export const UsageUnion$inboundSchema: z.ZodType<
+  UsageUnion,
+  z.ZodTypeDef,
+  unknown
+> = z.lazy(() => ChatCompletionChunkUsage$inboundSchema);
+
+/** @internal */
+export type UsageUnion$Outbound = ChatCompletionChunkUsage$Outbound;
+
+/** @internal */
+export const UsageUnion$outboundSchema: z.ZodType<
+  UsageUnion$Outbound,
+  z.ZodTypeDef,
+  UsageUnion
+> = z.lazy(() => ChatCompletionChunkUsage$outboundSchema);
+
+/**
+ * @internal
+ * @deprecated This namespace will be removed in future versions. Use schemas and types that are exported directly from this module.
+ */
+export namespace UsageUnion$ {
+  /** @deprecated use `UsageUnion$inboundSchema` instead. */
+  export const inboundSchema = UsageUnion$inboundSchema;
+  /** @deprecated use `UsageUnion$outboundSchema` instead. */
+  export const outboundSchema = UsageUnion$outboundSchema;
+  /** @deprecated use `UsageUnion$Outbound` instead. */
+  export type Outbound = UsageUnion$Outbound;
+}
+
+export function usageUnionToJSON(usageUnion: UsageUnion): string {
+  return JSON.stringify(UsageUnion$outboundSchema.parse(usageUnion));
+}
+
+export function usageUnionFromJSON(
+  jsonString: string,
+): SafeParseResult<UsageUnion, SDKValidationError> {
+  return safeParse(
+    jsonString,
+    (x) => UsageUnion$inboundSchema.parse(JSON.parse(x)),
+    `Failed to parse 'UsageUnion' from JSON`,
+  );
+}
+
+/** @internal */
 export const Data$inboundSchema: z.ZodType<Data, z.ZodTypeDef, unknown> = z
   .object({
     id: z.string(),
@@ -92,7 +228,8 @@ export const Data$inboundSchema: z.ZodType<Data, z.ZodTypeDef, unknown> = z
     model: z.string(),
     system_fingerprint: z.nullable(z.string()).optional(),
     choices: z.array(ChatCompletionChunkChoice$inboundSchema),
-    usage: Usage$inboundSchema.optional(),
+    usage: z.nullable(z.lazy(() => ChatCompletionChunkUsage$inboundSchema))
+      .optional(),
   }).transform((v) => {
     return remap$(v, {
       "system_fingerprint": "systemFingerprint",
@@ -107,7 +244,7 @@ export type Data$Outbound = {
   model: string;
   system_fingerprint?: string | null | undefined;
   choices: Array<ChatCompletionChunkChoice$Outbound>;
-  usage?: Usage$Outbound | undefined;
+  usage?: ChatCompletionChunkUsage$Outbound | null | undefined;
 };
 
 /** @internal */
@@ -119,7 +256,8 @@ export const Data$outboundSchema: z.ZodType<Data$Outbound, z.ZodTypeDef, Data> =
     model: z.string(),
     systemFingerprint: z.nullable(z.string()).optional(),
     choices: z.array(ChatCompletionChunkChoice$outboundSchema),
-    usage: Usage$outboundSchema.optional(),
+    usage: z.nullable(z.lazy(() => ChatCompletionChunkUsage$outboundSchema))
+      .optional(),
   }).transform((v) => {
     return remap$(v, {
       systemFingerprint: "system_fingerprint",

@@ -19,6 +19,7 @@
 
 ### Example Usage
 
+<!-- UsageSnippet language="typescript" operationID="listChatCompletions" method="get" path="/v1/chat/completions" -->
 ```typescript
 import { Sudo } from "sudo";
 
@@ -91,6 +92,7 @@ Create a model response for the given string of prompts.
 
 ### Example Usage
 
+<!-- UsageSnippet language="typescript" operationID="create" method="post" path="/v1/chat/completions" -->
 ```typescript
 import { Sudo } from "sudo";
 
@@ -169,6 +171,7 @@ Create a streaming model response for the given string of prompts using server-s
 
 ### Example Usage
 
+<!-- UsageSnippet language="typescript" operationID="createStreaming" method="post" path="/v1/chat/completions#stream" -->
 ```typescript
 import { Sudo } from "sudo";
 
@@ -263,6 +266,7 @@ run();
 
 ### Example Usage
 
+<!-- UsageSnippet language="typescript" operationID="getChatCompletion" method="get" path="/v1/chat/completions/{completion_id}" -->
 ```typescript
 import { Sudo } from "sudo";
 
@@ -339,6 +343,7 @@ run();
 
 ### Example Usage
 
+<!-- UsageSnippet language="typescript" operationID="updateChatCompletion" method="post" path="/v1/chat/completions/{completion_id}" -->
 ```typescript
 import { Sudo } from "sudo";
 
@@ -425,6 +430,7 @@ run();
 
 ### Example Usage
 
+<!-- UsageSnippet language="typescript" operationID="deleteChatCompletion" method="delete" path="/v1/chat/completions/{completion_id}" -->
 ```typescript
 import { Sudo } from "sudo";
 
@@ -501,6 +507,7 @@ run();
 
 ### Example Usage
 
+<!-- UsageSnippet language="typescript" operationID="getChatCompletionMessages" method="get" path="/v1/chat/completions/{completion_id}/messages" -->
 ```typescript
 import { Sudo } from "sudo";
 

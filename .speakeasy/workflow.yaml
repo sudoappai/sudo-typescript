@@ -3,7 +3,7 @@ speakeasyVersion: latest
 sources:
     sudo-api:
         inputs:
-            - location: ../openapi.json
+            - location: ./openapi.json
         output: .speakeasy/out.openapi.yaml
         registry:
             location: registry.speakeasyapi.dev/sudo/sudo/sudo-api

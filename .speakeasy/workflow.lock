@@ -1,9 +1,9 @@
-speakeasyVersion: 1.590.0
+speakeasyVersion: 1.592.2
 sources:
     sudo-api:
         sourceNamespace: sudo-api
-        sourceRevisionDigest: sha256:785a90de9d7e2ccd27892b32d0c99a9adc16f05257ef02326937683771d85fc1
-        sourceBlobDigest: sha256:7ec00a27be867b2a7a1e2ea12e6e939a4e5028ee69a3d21cee1b4830fde2486e
+        sourceRevisionDigest: sha256:4e229668f92d6b486bcf50b3dc3272345a1e79f40d867a7afca878b6eb9656b7
+        sourceBlobDigest: sha256:4f2cf6a61e08db6e602efc116cee10587250f5bcb6afcd12bffbaeb88700121a
         tags:
             - latest
             - 0.1.0
@@ -11,17 +11,17 @@ targets:
     sudo:
         source: sudo-api
         sourceNamespace: sudo-api
-        sourceRevisionDigest: sha256:785a90de9d7e2ccd27892b32d0c99a9adc16f05257ef02326937683771d85fc1
-        sourceBlobDigest: sha256:7ec00a27be867b2a7a1e2ea12e6e939a4e5028ee69a3d21cee1b4830fde2486e
+        sourceRevisionDigest: sha256:4e229668f92d6b486bcf50b3dc3272345a1e79f40d867a7afca878b6eb9656b7
+        sourceBlobDigest: sha256:4f2cf6a61e08db6e602efc116cee10587250f5bcb6afcd12bffbaeb88700121a
         codeSamplesNamespace: sudo-api-typescript-code-samples
-        codeSamplesRevisionDigest: sha256:ebd52150f0ba648533bc346596b76f72470da722c53921400663b1c9ff075c4e
+        codeSamplesRevisionDigest: sha256:5c54fb2bac2fec74486bb5c72e9995f3583b51116bb10095933f2c885e4b310c
 workflow:
     workflowVersion: 1.0.0
     speakeasyVersion: latest
     sources:
         sudo-api:
             inputs:
-                - location: ../openapi.json
+                - location: ./openapi.json
             output: .speakeasy/out.openapi.yaml
             registry:
                 location: registry.speakeasyapi.dev/sudo/sudo/sudo-api

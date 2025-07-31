@@ -14,6 +14,7 @@ Check if the Sudo API and backend infrastructure are health and ready to accept 
 
 ### Example Usage
 
+<!-- UsageSnippet language="typescript" operationID="healthCheck" method="get" path="/system/health" -->
 ```typescript
 import { Sudo } from "sudo";
 
@@ -83,6 +84,7 @@ Get a list of all AI models supported in the Sudo API.
 
 ### Example Usage
 
+<!-- UsageSnippet language="typescript" operationID="getSupportedModels" method="get" path="/v1/models" -->
 ```typescript
 import { Sudo } from "sudo";
 
