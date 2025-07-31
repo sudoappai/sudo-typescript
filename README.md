@@ -10,9 +10,7 @@ Developer-friendly & type-safe Typescript SDK specifically catered to leverage *
 </div>
 
 
-<br /><br />
-> [!IMPORTANT]
-> This SDK is not yet ready for production use. To complete setup please follow the steps outlined in your [workspace](https://app.speakeasy.com/org/sudo/sudo). Delete this section before > publishing to a package manager.
+
 
 <!-- Start Summary [summary] -->
 ## Summary
@@ -23,29 +21,42 @@ Developer-friendly & type-safe Typescript SDK specifically catered to leverage *
 <!-- Start Table of Contents [toc] -->
 ## Table of Contents
 <!-- $toc-max-depth=2 -->
-* [sudo](#sudo)
-  * [SDK Installation](#sdk-installation)
-  * [Requirements](#requirements)
-  * [SDK Example Usage](#sdk-example-usage)
-  * [Authentication](#authentication)
-  * [Available Resources and Operations](#available-resources-and-operations)
-  * [Standalone functions](#standalone-functions)
-  * [Server-sent event streaming](#server-sent-event-streaming)
-  * [Retries](#retries)
-  * [Error Handling](#error-handling)
-  * [Custom HTTP Client](#custom-http-client)
-  * [Debugging](#debugging)
-* [Development](#development)
-  * [Maturity](#maturity)
-  * [Contributions](#contributions)
+- [sudo](#sudo)
+  - [Summary](#summary)
+  - [Table of Contents](#table-of-contents)
+  - [SDK Installation](#sdk-installation)
+    - [NPM](#npm)
+    - [PNPM](#pnpm)
+    - [Bun](#bun)
+    - [Yarn](#yarn)
+  - [Requirements](#requirements)
+  - [SDK Example Usage](#sdk-example-usage)
+    - [Example](#example)
+  - [Authentication](#authentication)
+    - [Per-Client Security Schemes](#per-client-security-schemes)
+  - [Available Resources and Operations](#available-resources-and-operations)
+    - [router](#router)
+    - [system](#system)
+  - [Standalone functions](#standalone-functions)
+  - [Server-sent event streaming](#server-sent-event-streaming)
+  - [Retries](#retries)
+  - [Error Handling](#error-handling)
+    - [Example](#example-1)
+    - [Error Classes](#error-classes)
+  - [Custom HTTP Client](#custom-http-client)
+  - [Debugging](#debugging)
+- [Development](#development)
+  - [Maturity](#maturity)
+  - [Contributions](#contributions)
+    - [SDK Created by Speakeasy](#sdk-created-by-speakeasy)
 
 <!-- End Table of Contents [toc] -->
 
 <!-- Start SDK Installation [installation] -->
 ## SDK Installation
 
-> [!TIP]
-> To finish publishing your SDK to npm and others you must [run your first generation action](https://www.speakeasy.com/docs/github-setup#step-by-step-guide).
+<!-- > [!TIP]
+> To finish publishing your SDK to npm and others you must [run your first generation action](https://www.speakeasy.com/docs/github-setup#step-by-step-guide). -->
 
 
 The SDK can be installed with either [npm](https://www.npmjs.com/), [pnpm](https://pnpm.io/), [bun](https://bun.sh/) or [yarn](https://classic.yarnpkg.com/en/) package managers.
