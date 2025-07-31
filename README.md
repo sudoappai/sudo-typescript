@@ -107,12 +107,19 @@ For supported JavaScript runtimes, please consult [RUNTIMES.md](RUNTIMES.md).
 import { Sudo } from "sudo";
 
 const sudo = new Sudo({
-  serverURL: "https://api.example.com",
+  serverURL: "https://sudoapp.dev/api",
   apiKey: process.env["SUDO_API_KEY"] ?? "",
 });
 
 async function run() {
-  const result = await sudo.system.healthCheck();
+  const result = await sudo.router.create({
+    model: "gpt-4o",
+    messages: [
+      { role: "developer", content: "You are a helpful assistant." },
+      { role: "user", content: "Hello! Give me a study plan to learn Python." }
+    ],
+    maxCompletionTokens: 150
+  });
 
   console.log(result);
 }
@@ -138,12 +145,20 @@ To authenticate with the API the `apiKey` parameter must be set when initializin
 import { Sudo } from "sudo";
 
 const sudo = new Sudo({
-  serverURL: "https://api.example.com",
+  serverURL: "https://sudoapp.dev/api",
   apiKey: process.env["SUDO_API_KEY"] ?? "",
 });
 
 async function run() {
-  const result = await sudo.system.healthCheck();
+  const result = await sudo.router.create({
+    model: "claude-3-5-sonnet-20241022",
+    messages: [
+      { role: "developer", content: "You are a helpful assistant." },
+      { role: "user", content: "What are the benefits of TypeScript?" }
+    ],
+    store: true,
+    maxCompletionTokens: 200
+  });
 
   console.log(result);
 }
@@ -219,24 +234,25 @@ underlying connection.
 import { Sudo } from "sudo";
 
 const sudo = new Sudo({
-  serverURL: "https://api.example.com",
+  serverURL: "https://sudoapp.dev/api",
   apiKey: process.env["SUDO_API_KEY"] ?? "",
 });
 
 async function run() {
   const result = await sudo.router.createStreaming({
+    model: "gpt-4o",
     messages: [
-      {
-        content: "<value>",
-        role: "<value>",
-      },
+      { role: "developer", content: "You are a helpful assistant." },
+      { role: "user", content: "Give me a list of all the planets in the solar system, with a few sentences about each." }
     ],
-    model: "PT Cruiser",
+    store: true
   });
 
   for await (const event of result) {
     // Handle the event
-    console.log(event);
+    if (event.data?.choices?.[0]?.delta?.content) {
+      process.stdout.write(event.data.choices[0].delta.content);
+    }
   }
 }
 
@@ -258,12 +274,19 @@ To change the default retry strategy for a single API call, simply provide a ret
 import { Sudo } from "sudo";
 
 const sudo = new Sudo({
-  serverURL: "https://api.example.com",
+  serverURL: "https://sudoapp.dev/api",
   apiKey: process.env["SUDO_API_KEY"] ?? "",
 });
 
 async function run() {
-  const result = await sudo.system.healthCheck({
+  const result = await sudo.router.create({
+    model: "gpt-4o",
+    messages: [
+      { role: "developer", content: "You are a helpful assistant." },
+      { role: "user", content: "Explain quantum computing in simple terms." }
+    ],
+    maxCompletionTokens: 300
+  }, {
     retries: {
       strategy: "backoff",
       backoff: {
@@ -288,7 +311,7 @@ If you'd like to override the default retry strategy for all operations that sup
 import { Sudo } from "sudo";
 
 const sudo = new Sudo({
-  serverURL: "https://api.example.com",
+  serverURL: "https://sudoapp.dev/api",
   retryConfig: {
     strategy: "backoff",
     backoff: {
@@ -303,7 +326,14 @@ const sudo = new Sudo({
 });
 
 async function run() {
-  const result = await sudo.system.healthCheck();
+  const result = await sudo.router.create({
+    model: "claude-3-5-sonnet-20241022",
+    messages: [
+      { role: "developer", content: "You are a helpful assistant." },
+      { role: "user", content: "Write a short poem about coding." }
+    ],
+    maxCompletionTokens: 200
+  });
 
   console.log(result);
 }
@@ -333,13 +363,20 @@ import { Sudo } from "sudo";
 import * as errors from "sudo/models/errors";
 
 const sudo = new Sudo({
-  serverURL: "https://api.example.com",
+  serverURL: "https://sudoapp.dev/api",
   apiKey: process.env["SUDO_API_KEY"] ?? "",
 });
 
 async function run() {
   try {
-    const result = await sudo.system.getSupportedModels();
+    const result = await sudo.router.create({
+      model: "gpt-4o",
+      messages: [
+        { role: "developer", content: "You are a helpful assistant." },
+        { role: "user", content: "Explain the benefits of error handling." }
+      ],
+      maxCompletionTokens: 250
+    });
 
     console.log(result);
   } catch (error) {
@@ -432,7 +469,11 @@ httpClient.addHook("requestError", (error, request) => {
   console.groupEnd();
 });
 
-const sdk = new Sudo({ httpClient });
+const sdk = new Sudo({ 
+  serverURL: "https://sudoapp.dev/api",
+  apiKey: process.env["SUDO_API_KEY"] ?? "",
+  httpClient 
+});
 ```
 <!-- End Custom HTTP Client [http-client] -->
 
@@ -449,7 +490,11 @@ You can pass a logger that matches `console`'s interface as an SDK option.
 ```typescript
 import { Sudo } from "sudo";
 
-const sdk = new Sudo({ debugLogger: console });
+const sdk = new Sudo({ 
+  serverURL: "https://sudoapp.dev/api",
+  apiKey: process.env["SUDO_API_KEY"] ?? "",
+  debugLogger: console 
+});
 ```
 
 You can also enable a default debug logger by setting an environment variable `SUDO_DEBUG` to true.

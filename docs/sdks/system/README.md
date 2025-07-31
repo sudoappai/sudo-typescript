@@ -19,7 +19,7 @@ Check if the Sudo API and backend infrastructure are health and ready to accept 
 import { Sudo } from "sudo";
 
 const sudo = new Sudo({
-  serverURL: "https://api.example.com",
+  serverURL: "https://sudoapp.dev/api",
   apiKey: process.env["SUDO_API_KEY"] ?? "",
 });
 
@@ -43,7 +43,7 @@ import { systemHealthCheck } from "sudo/funcs/systemHealthCheck.js";
 // Use `SudoCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
 const sudo = new SudoCore({
-  serverURL: "https://api.example.com",
+  serverURL: "https://sudoapp.dev/api",
   apiKey: process.env["SUDO_API_KEY"] ?? "",
 });
 
@@ -89,7 +89,7 @@ Get a list of all AI models supported in the Sudo API.
 import { Sudo } from "sudo";
 
 const sudo = new Sudo({
-  serverURL: "https://api.example.com",
+  serverURL: "https://sudoapp.dev/api",
   apiKey: process.env["SUDO_API_KEY"] ?? "",
 });
 
@@ -113,7 +113,7 @@ import { systemGetSupportedModels } from "sudo/funcs/systemGetSupportedModels.js
 // Use `SudoCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
 const sudo = new SudoCore({
-  serverURL: "https://api.example.com",
+  serverURL: "https://sudoapp.dev/api",
   apiKey: process.env["SUDO_API_KEY"] ?? "",
 });
 

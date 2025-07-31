@@ -24,12 +24,15 @@
 import { Sudo } from "sudo";
 
 const sudo = new Sudo({
-  serverURL: "https://api.example.com",
+  serverURL: "https://sudoapp.dev/api",
   apiKey: process.env["SUDO_API_KEY"] ?? "",
 });
 
 async function run() {
-  const result = await sudo.router.listChatCompletions();
+  const result = await sudo.router.listChatCompletions({ 
+    limit: 10, 
+    order: "desc" 
+  });
 
   console.log(result);
 }
@@ -48,12 +51,15 @@ import { routerListChatCompletions } from "sudo/funcs/routerListChatCompletions.
 // Use `SudoCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
 const sudo = new SudoCore({
-  serverURL: "https://api.example.com",
+  serverURL: "https://sudoapp.dev/api",
   apiKey: process.env["SUDO_API_KEY"] ?? "",
 });
 
 async function run() {
-  const res = await routerListChatCompletions(sudo);
+  const res = await routerListChatCompletions(sudo, { 
+    limit: 10, 
+    order: "desc" 
+  });
   if (res.ok) {
     const { value: result } = res;
     console.log(result);
@@ -97,14 +103,19 @@ Create a model response for the given string of prompts.
 import { Sudo } from "sudo";
 
 const sudo = new Sudo({
-  serverURL: "https://api.example.com",
+  serverURL: "https://sudoapp.dev/api",
   apiKey: process.env["SUDO_API_KEY"] ?? "",
 });
 
 async function run() {
   const result = await sudo.router.create({
-    messages: [],
-    model: "Camry",
+    model: "gpt-4o",
+    messages: [
+      { role: "developer", content: "You are a helpful assistant." },
+      { role: "user", content: "Hello! Give me a study plan to learn Python." }
+    ],
+    store: true,
+    maxCompletionTokens: 150
   });
 
   console.log(result);
@@ -124,14 +135,19 @@ import { routerCreate } from "sudo/funcs/routerCreate.js";
 // Use `SudoCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
 const sudo = new SudoCore({
-  serverURL: "https://api.example.com",
+  serverURL: "https://sudoapp.dev/api",
   apiKey: process.env["SUDO_API_KEY"] ?? "",
 });
 
 async function run() {
   const res = await routerCreate(sudo, {
-    messages: [],
-    model: "Camry",
+    model: "claude-3-5-sonnet-20241022",
+    messages: [
+      { role: "developer", content: "You are a helpful assistant." },
+      { role: "user", content: "What are the benefits of TypeScript?" }
+    ],
+    store: true,
+    maxCompletionTokens: 200
   });
   if (res.ok) {
     const { value: result } = res;
@@ -176,24 +192,25 @@ Create a streaming model response for the given string of prompts using server-s
 import { Sudo } from "sudo";
 
 const sudo = new Sudo({
-  serverURL: "https://api.example.com",
+  serverURL: "https://sudoapp.dev/api",
   apiKey: process.env["SUDO_API_KEY"] ?? "",
 });
 
 async function run() {
   const result = await sudo.router.createStreaming({
+    model: "gpt-4o",
     messages: [
-      {
-        content: "<value>",
-        role: "<value>",
-      },
+      { role: "developer", content: "You are a helpful assistant." },
+      { role: "user", content: "Give me a list of all the planets in the solar system, with a few sentences about each." }
     ],
-    model: "PT Cruiser",
+    store: true
   });
 
   for await (const event of result) {
     // Handle the event
-    console.log(event);
+    if (event.data?.choices?.[0]?.delta?.content) {
+      process.stdout.write(event.data.choices[0].delta.content);
+    }
   }
 }
 
@@ -211,25 +228,26 @@ import { routerCreateStreaming } from "sudo/funcs/routerCreateStreaming.js";
 // Use `SudoCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
 const sudo = new SudoCore({
-  serverURL: "https://api.example.com",
+  serverURL: "https://sudoapp.dev/api",
   apiKey: process.env["SUDO_API_KEY"] ?? "",
 });
 
 async function run() {
   const res = await routerCreateStreaming(sudo, {
+    model: "claude-3-5-sonnet-20241022",
     messages: [
-      {
-        content: "<value>",
-        role: "<value>",
-      },
+      { role: "developer", content: "You are a helpful assistant." },
+      { role: "user", content: "Explain the concept of machine learning in simple terms." }
     ],
-    model: "PT Cruiser",
+    store: true
   });
   if (res.ok) {
     const { value: result } = res;
     for await (const event of result) {
     // Handle the event
-    console.log(event);
+    if (event.data?.choices?.[0]?.delta?.content) {
+      process.stdout.write(event.data.choices[0].delta.content);
+    }
   }
   } else {
     console.log("routerCreateStreaming failed:", res.error);
@@ -271,13 +289,13 @@ run();
 import { Sudo } from "sudo";
 
 const sudo = new Sudo({
-  serverURL: "https://api.example.com",
+  serverURL: "https://sudoapp.dev/api",
   apiKey: process.env["SUDO_API_KEY"] ?? "",
 });
 
 async function run() {
   const result = await sudo.router.getChatCompletion({
-    completionId: "<id>",
+    completionId: "chatcmpl-example123",
   });
 
   console.log(result);
@@ -297,13 +315,13 @@ import { routerGetChatCompletion } from "sudo/funcs/routerGetChatCompletion.js";
 // Use `SudoCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
 const sudo = new SudoCore({
-  serverURL: "https://api.example.com",
+  serverURL: "https://sudoapp.dev/api",
   apiKey: process.env["SUDO_API_KEY"] ?? "",
 });
 
 async function run() {
   const res = await routerGetChatCompletion(sudo, {
-    completionId: "<id>",
+    completionId: "chatcmpl-example123",
   });
   if (res.ok) {
     const { value: result } = res;
@@ -348,16 +366,17 @@ run();
 import { Sudo } from "sudo";
 
 const sudo = new Sudo({
-  serverURL: "https://api.example.com",
+  serverURL: "https://sudoapp.dev/api",
   apiKey: process.env["SUDO_API_KEY"] ?? "",
 });
 
 async function run() {
   const result = await sudo.router.updateChatCompletion({
-    completionId: "<id>",
+    completionId: "chatcmpl-example123",
     requestBody: {
       metadata: {
-
+        project: "my-ai-app",
+        version: "1.0.0"
       },
     },
   });
@@ -379,16 +398,17 @@ import { routerUpdateChatCompletion } from "sudo/funcs/routerUpdateChatCompletio
 // Use `SudoCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
 const sudo = new SudoCore({
-  serverURL: "https://api.example.com",
+  serverURL: "https://sudoapp.dev/api",
   apiKey: process.env["SUDO_API_KEY"] ?? "",
 });
 
 async function run() {
   const res = await routerUpdateChatCompletion(sudo, {
-    completionId: "<id>",
+    completionId: "chatcmpl-example123",
     requestBody: {
       metadata: {
-  
+        project: "my-ai-app",
+        version: "1.0.0"
       },
     },
   });
@@ -435,13 +455,13 @@ run();
 import { Sudo } from "sudo";
 
 const sudo = new Sudo({
-  serverURL: "https://api.example.com",
+  serverURL: "https://sudoapp.dev/api",
   apiKey: process.env["SUDO_API_KEY"] ?? "",
 });
 
 async function run() {
   const result = await sudo.router.deleteChatCompletion({
-    completionId: "<id>",
+    completionId: "chatcmpl-example123",
   });
 
   console.log(result);
@@ -461,13 +481,13 @@ import { routerDeleteChatCompletion } from "sudo/funcs/routerDeleteChatCompletio
 // Use `SudoCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
 const sudo = new SudoCore({
-  serverURL: "https://api.example.com",
+  serverURL: "https://sudoapp.dev/api",
   apiKey: process.env["SUDO_API_KEY"] ?? "",
 });
 
 async function run() {
   const res = await routerDeleteChatCompletion(sudo, {
-    completionId: "<id>",
+    completionId: "chatcmpl-example123",
   });
   if (res.ok) {
     const { value: result } = res;
@@ -512,13 +532,13 @@ run();
 import { Sudo } from "sudo";
 
 const sudo = new Sudo({
-  serverURL: "https://api.example.com",
+  serverURL: "https://sudoapp.dev/api",
   apiKey: process.env["SUDO_API_KEY"] ?? "",
 });
 
 async function run() {
   const result = await sudo.router.getChatCompletionMessages({
-    completionId: "<id>",
+    completionId: "chatcmpl-example123",
   });
 
   console.log(result);
@@ -538,13 +558,13 @@ import { routerGetChatCompletionMessages } from "sudo/funcs/routerGetChatComplet
 // Use `SudoCore` for best tree-shaking performance.
 // You can create one instance of it to use across an application.
 const sudo = new SudoCore({
-  serverURL: "https://api.example.com",
+  serverURL: "https://sudoapp.dev/api",
   apiKey: process.env["SUDO_API_KEY"] ?? "",
 });
 
 async function run() {
   const res = await routerGetChatCompletionMessages(sudo, {
-    completionId: "<id>",
+    completionId: "chatcmpl-example123",
   });
   if (res.ok) {
     const { value: result } = res;
