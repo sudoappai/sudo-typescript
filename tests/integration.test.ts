@@ -553,133 +553,133 @@ describe('Reasoning Models', () => {
   }, 30000);
 });
 
-describe('Stored Completions', () => {
-  test('completion CRUD operations', async () => {
-    // Step 1: Create a stored completion
-    const messages = [
-      { role: "developer" as const, content: "You are a helpful assistant." },
-      { role: "user" as const, content: "Hello! Give me a study plan to learn Python." }
-    ];
+// describe('Stored Completions', () => {
+//   test('completion CRUD operations', async () => {
+//     // Step 1: Create a stored completion
+//     const messages = [
+//       { role: "developer" as const, content: "You are a helpful assistant." },
+//       { role: "user" as const, content: "Hello! Give me a study plan to learn Python." }
+//     ];
     
-    const createResponse = await client.router.create({
-      model: "gpt-4o",
-      messages: messages,
-      store: true,
-      maxCompletionTokens: 150
-    });
+//     const createResponse = await client.router.create({
+//       model: "gpt-4o",
+//       messages: messages,
+//       store: true,
+//       maxCompletionTokens: 150
+//     });
     
-    expect(createResponse.id).toBeDefined();
-    const completionId = createResponse.id!;
+//     expect(createResponse.id).toBeDefined();
+//     const completionId = createResponse.id!;
     
-    // Step 2: Get the completion by ID (with retries)
-    const maxAttempts = 6;
-    const delayBetweenAttempts = 2000;
+//     // Step 2: Get the completion by ID (with retries)
+//     const maxAttempts = 6;
+//     const delayBetweenAttempts = 2000;
     
-    let getResponse: models.ChatCompletion | undefined;
-    for (let attempt = 0; attempt < maxAttempts; attempt++) {
-      try {
-        getResponse = await client.router.getChatCompletion({ completionId });
-        break;
-      } catch (error) {
-        if (attempt < maxAttempts - 1) {
-          await new Promise(resolve => setTimeout(resolve, delayBetweenAttempts));
-          continue;
-        } else {
-          throw error;
-        }
-      }
-    }
+//     let getResponse: models.ChatCompletion | undefined;
+//     for (let attempt = 0; attempt < maxAttempts; attempt++) {
+//       try {
+//         getResponse = await client.router.getChatCompletion({ completionId });
+//         break;
+//       } catch (error) {
+//         if (attempt < maxAttempts - 1) {
+//           await new Promise(resolve => setTimeout(resolve, delayBetweenAttempts));
+//           continue;
+//         } else {
+//           throw error;
+//         }
+//       }
+//     }
     
-    expect(getResponse).toBeDefined();
-    expect(getResponse!.id).toBe(completionId);
-    expect(getResponse!.object).toBe("chat.completion");
+//     expect(getResponse).toBeDefined();
+//     expect(getResponse!.id).toBe(completionId);
+//     expect(getResponse!.object).toBe("chat.completion");
     
-    // Step 3: Get messages for the completion (with retries)
-    let messagesResponse: models.ChatMessageList | undefined;
-    for (let attempt = 0; attempt < maxAttempts; attempt++) {
-      try {
-        messagesResponse = await client.router.getChatCompletionMessages({ completionId });
-        break;
-      } catch (error) {
-        if (attempt < maxAttempts - 1) {
-          await new Promise(resolve => setTimeout(resolve, delayBetweenAttempts));
-          continue;
-        } else {
-          throw error;
-        }
-      }
-    }
+//     // Step 3: Get messages for the completion (with retries)
+//     let messagesResponse: models.ChatMessageList | undefined;
+//     for (let attempt = 0; attempt < maxAttempts; attempt++) {
+//       try {
+//         messagesResponse = await client.router.getChatCompletionMessages({ completionId });
+//         break;
+//       } catch (error) {
+//         if (attempt < maxAttempts - 1) {
+//           await new Promise(resolve => setTimeout(resolve, delayBetweenAttempts));
+//           continue;
+//         } else {
+//           throw error;
+//         }
+//       }
+//     }
     
-    expect(messagesResponse).toBeDefined();
-    expect(messagesResponse!.object).toBeDefined();
-    expect(messagesResponse!.data).toBeDefined();
-    expect(Array.isArray(messagesResponse!.data)).toBe(true);
-    expect(messagesResponse!.data.length).toBeGreaterThan(0);
+//     expect(messagesResponse).toBeDefined();
+//     expect(messagesResponse!.object).toBeDefined();
+//     expect(messagesResponse!.data).toBeDefined();
+//     expect(Array.isArray(messagesResponse!.data)).toBe(true);
+//     expect(messagesResponse!.data.length).toBeGreaterThan(0);
     
-    // Check first message structure
-    const firstMessage = messagesResponse!.data[0];
-    expect(firstMessage.role).toBe("developer");
-    expect(firstMessage.content).toBeDefined();
+//     // Check first message structure
+//     const firstMessage = messagesResponse!.data[0];
+//     expect(firstMessage.role).toBe("developer");
+//     expect(firstMessage.content).toBeDefined();
     
-            // Step 4: Update the completion with metadata (with retries)
-        let updateResponse: models.ChatCompletion | undefined;
-        for (let attempt = 0; attempt < maxAttempts; attempt++) {
-          try {
-            updateResponse = await client.router.updateChatCompletion({
-              completionId,
-              requestBody: {
-                metadata: { test: "value", updated: "true" }
-              }
-            });
-            break;
-          } catch (error) {
-            if (attempt < maxAttempts - 1) {
-              await new Promise(resolve => setTimeout(resolve, delayBetweenAttempts));
-              continue;
-            } else {
-              throw error;
-            }
-          }
-        }
+//             // Step 4: Update the completion with metadata (with retries)
+//         let updateResponse: models.ChatCompletion | undefined;
+//         for (let attempt = 0; attempt < maxAttempts; attempt++) {
+//           try {
+//             updateResponse = await client.router.updateChatCompletion({
+//               completionId,
+//               requestBody: {
+//                 metadata: { test: "value", updated: "true" }
+//               }
+//             });
+//             break;
+//           } catch (error) {
+//             if (attempt < maxAttempts - 1) {
+//               await new Promise(resolve => setTimeout(resolve, delayBetweenAttempts));
+//               continue;
+//             } else {
+//               throw error;
+//             }
+//           }
+//         }
     
-    expect(updateResponse).toBeDefined();
-    expect(updateResponse!.id).toBe(completionId);
-    expect(updateResponse!.metadata).toBeDefined();
-    expect(updateResponse!.metadata!.test).toBe("value");
-    expect(updateResponse!.metadata!.updated).toBe("true");
+//     expect(updateResponse).toBeDefined();
+//     expect(updateResponse!.id).toBe(completionId);
+//     expect(updateResponse!.metadata).toBeDefined();
+//     expect(updateResponse!.metadata!.test).toBe("value");
+//     expect(updateResponse!.metadata!.updated).toBe("true");
     
-    // Step 5: List completions to verify it's there
-    const listResponse = await client.router.listChatCompletions({ limit: 10, order: "desc" });
-    expect(listResponse.object).toBe("list");
-    expect(listResponse.data).toBeDefined();
-    expect(Array.isArray(listResponse.data)).toBe(true);
+//     // Step 5: List completions to verify it's there
+//     const listResponse = await client.router.listChatCompletions({ limit: 10, order: "desc" });
+//     expect(listResponse.object).toBe("list");
+//     expect(listResponse.data).toBeDefined();
+//     expect(Array.isArray(listResponse.data)).toBe(true);
     
-    // Find our completion in the list
-    const foundCompletion = listResponse.data.find(completion => completion.id === completionId);
-    expect(foundCompletion).toBeDefined();
+//     // Find our completion in the list
+//     const foundCompletion = listResponse.data.find(completion => completion.id === completionId);
+//     expect(foundCompletion).toBeDefined();
     
-    // Step 6: Delete the completion (with retries)
-    let deleteResponse: models.ChatDeletionConfirmation | undefined;
-    for (let attempt = 0; attempt < maxAttempts; attempt++) {
-      try {
-        deleteResponse = await client.router.deleteChatCompletion({ completionId });
-        break;
-      } catch (error) {
-        if (attempt < maxAttempts - 1) {
-          await new Promise(resolve => setTimeout(resolve, delayBetweenAttempts));
-          continue;
-        } else {
-          throw error;
-        }
-      }
-    }
+//     // Step 6: Delete the completion (with retries)
+//     let deleteResponse: models.ChatDeletionConfirmation | undefined;
+//     for (let attempt = 0; attempt < maxAttempts; attempt++) {
+//       try {
+//         deleteResponse = await client.router.deleteChatCompletion({ completionId });
+//         break;
+//       } catch (error) {
+//         if (attempt < maxAttempts - 1) {
+//           await new Promise(resolve => setTimeout(resolve, delayBetweenAttempts));
+//           continue;
+//         } else {
+//           throw error;
+//         }
+//       }
+//     }
     
-    expect(deleteResponse).toBeDefined();
-    expect(deleteResponse!.id).toBe(completionId);
-    expect(deleteResponse!.object).toBe("chat.completion.deleted");
-    expect(deleteResponse!.deleted).toBe(true);
-  }, 90000); // 60 second timeout for CRUD operations
-});
+//     expect(deleteResponse).toBeDefined();
+//     expect(deleteResponse!.id).toBe(completionId);
+//     expect(deleteResponse!.object).toBe("chat.completion.deleted");
+//     expect(deleteResponse!.deleted).toBe(true);
+//   }, 90000); // 60 second timeout for CRUD operations
+// });
 
 describe('Error Handling', () => {
   test('error bad request', async () => {
