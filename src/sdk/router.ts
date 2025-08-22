@@ -5,6 +5,7 @@
 import { routerCreate } from "../funcs/routerCreate.js";
 import { routerCreateStreaming } from "../funcs/routerCreateStreaming.js";
 import { routerDeleteChatCompletion } from "../funcs/routerDeleteChatCompletion.js";
+import { routerGenerateImage } from "../funcs/routerGenerateImage.js";
 import { routerGetChatCompletion } from "../funcs/routerGetChatCompletion.js";
 import { routerGetChatCompletionMessages } from "../funcs/routerGetChatCompletionMessages.js";
 import { routerListChatCompletions } from "../funcs/routerListChatCompletions.js";
@@ -108,6 +109,20 @@ export class Router extends ClientSDK {
     options?: RequestOptions,
   ): Promise<models.ChatMessageList> {
     return unwrapAsync(routerGetChatCompletionMessages(
+      this,
+      request,
+      options,
+    ));
+  }
+
+  /**
+   * Generate Image
+   */
+  async generateImage(
+    request: models.ImageGenerationRequest,
+    options?: RequestOptions,
+  ): Promise<models.ImageGeneration> {
+    return unwrapAsync(routerGenerateImage(
       this,
       request,
       options,

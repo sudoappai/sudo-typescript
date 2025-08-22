@@ -1,6 +1,6 @@
 {
-  "name": "sudo-ai",
-  "version": "0.1.1",
+  "name": "sudo",
+  "version": "0.0.3",
   "author": "Speakeasy",
   "type": "module",
   "tshy": {
@@ -22,22 +22,16 @@
   "scripts": {
     "lint": "eslint --cache --max-warnings=0 src",
     "build": "tshy",
-    "test": "vitest run",
-    "test:watch": "vitest",
-    "test:integration": "vitest run tests/integration.test.ts",
     "prepublishOnly": "npm run build"
   },
   "peerDependencies": {},
   "devDependencies": {
     "@eslint/js": "^9.19.0",
-    "@types/node": "^22.10.3",
-    "@vitest/ui": "^2.1.8",
     "eslint": "^9.19.0",
     "globals": "^15.14.0",
     "tshy": "^2.0.0",
-    "typescript": "^5.4.5",
-    "typescript-eslint": "^8.22.0",
-    "vitest": "^2.1.8"
+    "typescript": "~5.8.3",
+    "typescript-eslint": "^8.26.0"
   },
   "dependencies": {
     "zod": "^3.20.0"

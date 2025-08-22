@@ -21,42 +21,29 @@ Developer-friendly & type-safe Typescript SDK specifically catered to leverage *
 <!-- Start Table of Contents [toc] -->
 ## Table of Contents
 <!-- $toc-max-depth=2 -->
-- [sudo](#sudo)
-  - [Summary](#summary)
-  - [Table of Contents](#table-of-contents)
-  - [SDK Installation](#sdk-installation)
-    - [NPM](#npm)
-    - [PNPM](#pnpm)
-    - [Bun](#bun)
-    - [Yarn](#yarn)
-  - [Requirements](#requirements)
-  - [SDK Example Usage](#sdk-example-usage)
-    - [Example](#example)
-  - [Authentication](#authentication)
-    - [Per-Client Security Schemes](#per-client-security-schemes)
-  - [Available Resources and Operations](#available-resources-and-operations)
-    - [router](#router)
-    - [system](#system)
-  - [Standalone functions](#standalone-functions)
-  - [Server-sent event streaming](#server-sent-event-streaming)
-  - [Retries](#retries)
-  - [Error Handling](#error-handling)
-    - [Example](#example-1)
-    - [Error Classes](#error-classes)
-  - [Custom HTTP Client](#custom-http-client)
-  - [Debugging](#debugging)
-- [Development](#development)
-  - [Maturity](#maturity)
-  - [Contributions](#contributions)
-    - [SDK Created by Speakeasy](#sdk-created-by-speakeasy)
+* [sudo](#sudo)
+  * [SDK Installation](#sdk-installation)
+  * [Requirements](#requirements)
+  * [SDK Example Usage](#sdk-example-usage)
+  * [Authentication](#authentication)
+  * [Available Resources and Operations](#available-resources-and-operations)
+  * [Standalone functions](#standalone-functions)
+  * [Server-sent event streaming](#server-sent-event-streaming)
+  * [Retries](#retries)
+  * [Error Handling](#error-handling)
+  * [Custom HTTP Client](#custom-http-client)
+  * [Debugging](#debugging)
+* [Development](#development)
+  * [Maturity](#maturity)
+  * [Contributions](#contributions)
 
 <!-- End Table of Contents [toc] -->
 
 <!-- Start SDK Installation [installation] -->
 ## SDK Installation
 
-<!-- > [!TIP]
-> To finish publishing your SDK to npm and others you must [run your first generation action](https://www.speakeasy.com/docs/github-setup#step-by-step-guide). -->
+> [!TIP]
+> To finish publishing your SDK to npm and others you must [run your first generation action](https://www.speakeasy.com/docs/github-setup#step-by-step-guide).
 
 
 The SDK can be installed with either [npm](https://www.npmjs.com/), [pnpm](https://pnpm.io/), [bun](https://bun.sh/) or [yarn](https://classic.yarnpkg.com/en/) package managers.
@@ -64,25 +51,25 @@ The SDK can be installed with either [npm](https://www.npmjs.com/), [pnpm](https
 ### NPM
 
 ```bash
-npm add sudo-ai
+npm add <UNSET>
 ```
 
 ### PNPM
 
 ```bash
-pnpm add sudo-ai
+pnpm add <UNSET>
 ```
 
 ### Bun
 
 ```bash
-bun add sudo-ai
+bun add <UNSET>
 ```
 
 ### Yarn
 
 ```bash
-yarn add sudo-ai zod
+yarn add <UNSET> zod
 
 # Note that Yarn does not install peer dependencies automatically. You will need
 # to install zod as shown above.
@@ -107,19 +94,12 @@ For supported JavaScript runtimes, please consult [RUNTIMES.md](RUNTIMES.md).
 import { Sudo } from "sudo";
 
 const sudo = new Sudo({
-  serverURL: "https://sudoapp.dev/api",
+  serverURL: "https://api.example.com",
   apiKey: process.env["SUDO_API_KEY"] ?? "",
 });
 
 async function run() {
-  const result = await sudo.router.create({
-    model: "gpt-4o",
-    messages: [
-      { role: "developer", content: "You are a helpful assistant." },
-      { role: "user", content: "Hello! Give me a study plan to learn Python." }
-    ],
-    maxCompletionTokens: 150
-  });
+  const result = await sudo.system.healthCheck();
 
   console.log(result);
 }
@@ -145,20 +125,12 @@ To authenticate with the API the `apiKey` parameter must be set when initializin
 import { Sudo } from "sudo";
 
 const sudo = new Sudo({
-  serverURL: "https://sudoapp.dev/api",
+  serverURL: "https://api.example.com",
   apiKey: process.env["SUDO_API_KEY"] ?? "",
 });
 
 async function run() {
-  const result = await sudo.router.create({
-    model: "claude-3-5-sonnet-20241022",
-    messages: [
-      { role: "developer", content: "You are a helpful assistant." },
-      { role: "user", content: "What are the benefits of TypeScript?" }
-    ],
-    store: true,
-    maxCompletionTokens: 200
-  });
+  const result = await sudo.system.healthCheck();
 
   console.log(result);
 }
@@ -183,6 +155,7 @@ run();
 * [updateChatCompletion](docs/sdks/router/README.md#updatechatcompletion) - *[OpenAI Only]* Update a Chat Completion with some metadata. Only Chat Completions that have been stored with the `store` parameter set to true will be returned.
 * [deleteChatCompletion](docs/sdks/router/README.md#deletechatcompletion) - *[OpenAI Only]* Delete a stored Chat Completion. Only Chat Completions that have been stored with the `store` parameter set to true will be returned.
 * [getChatCompletionMessages](docs/sdks/router/README.md#getchatcompletionmessages) - *[OpenAI Only]* Get the array of messages for a saved Chat Completion. Only Chat Completions that have been stored with the `store` parameter set to true will be returned.
+* [generateImage](docs/sdks/router/README.md#generateimage) - Generate Image
 
 
 ### [system](docs/sdks/system/README.md)
@@ -211,6 +184,7 @@ To read more about standalone functions, check [FUNCTIONS.md](./FUNCTIONS.md).
 - [`routerCreate`](docs/sdks/router/README.md#create) - Create a model response for the given string of prompts.
 - [`routerCreateStreaming`](docs/sdks/router/README.md#createstreaming) - Create a streaming model response for the given string of prompts using server-sent events.
 - [`routerDeleteChatCompletion`](docs/sdks/router/README.md#deletechatcompletion) - *[OpenAI Only]* Delete a stored Chat Completion. Only Chat Completions that have been stored with the `store` parameter set to true will be returned.
+- [`routerGenerateImage`](docs/sdks/router/README.md#generateimage) - Generate Image
 - [`routerGetChatCompletion`](docs/sdks/router/README.md#getchatcompletion) - *[OpenAI Only]* Get a Chat Completion. Only Chat Completions that have been stored with the `store` parameter set to true will be returned.
 - [`routerGetChatCompletionMessages`](docs/sdks/router/README.md#getchatcompletionmessages) - *[OpenAI Only]* Get the array of messages for a saved Chat Completion. Only Chat Completions that have been stored with the `store` parameter set to true will be returned.
 - [`routerListChatCompletions`](docs/sdks/router/README.md#listchatcompletions) - *[OpenAI Only]* Get a list of saved Chat Completions. Only Chat Completions that have been stored with the `store` parameter set to true will be returned.
@@ -234,25 +208,24 @@ underlying connection.
 import { Sudo } from "sudo";
 
 const sudo = new Sudo({
-  serverURL: "https://sudoapp.dev/api",
+  serverURL: "https://api.example.com",
   apiKey: process.env["SUDO_API_KEY"] ?? "",
 });
 
 async function run() {
   const result = await sudo.router.createStreaming({
-    model: "gpt-4o",
     messages: [
-      { role: "developer", content: "You are a helpful assistant." },
-      { role: "user", content: "Give me a list of all the planets in the solar system, with a few sentences about each." }
+      {
+        content: "<value>",
+        role: "<value>",
+      },
     ],
-    store: true
+    model: "PT Cruiser",
   });
 
   for await (const event of result) {
     // Handle the event
-    if (event.data?.choices?.[0]?.delta?.content) {
-      process.stdout.write(event.data.choices[0].delta.content);
-    }
+    console.log(event);
   }
 }
 
@@ -274,19 +247,12 @@ To change the default retry strategy for a single API call, simply provide a ret
 import { Sudo } from "sudo";
 
 const sudo = new Sudo({
-  serverURL: "https://sudoapp.dev/api",
+  serverURL: "https://api.example.com",
   apiKey: process.env["SUDO_API_KEY"] ?? "",
 });
 
 async function run() {
-  const result = await sudo.router.create({
-    model: "gpt-4o",
-    messages: [
-      { role: "developer", content: "You are a helpful assistant." },
-      { role: "user", content: "Explain quantum computing in simple terms." }
-    ],
-    maxCompletionTokens: 300
-  }, {
+  const result = await sudo.system.healthCheck({
     retries: {
       strategy: "backoff",
       backoff: {
@@ -311,7 +277,7 @@ If you'd like to override the default retry strategy for all operations that sup
 import { Sudo } from "sudo";
 
 const sudo = new Sudo({
-  serverURL: "https://sudoapp.dev/api",
+  serverURL: "https://api.example.com",
   retryConfig: {
     strategy: "backoff",
     backoff: {
@@ -326,14 +292,7 @@ const sudo = new Sudo({
 });
 
 async function run() {
-  const result = await sudo.router.create({
-    model: "claude-3-5-sonnet-20241022",
-    messages: [
-      { role: "developer", content: "You are a helpful assistant." },
-      { role: "user", content: "Write a short poem about coding." }
-    ],
-    maxCompletionTokens: 200
-  });
+  const result = await sudo.system.healthCheck();
 
   console.log(result);
 }
@@ -363,20 +322,13 @@ import { Sudo } from "sudo";
 import * as errors from "sudo/models/errors";
 
 const sudo = new Sudo({
-  serverURL: "https://sudoapp.dev/api",
+  serverURL: "https://api.example.com",
   apiKey: process.env["SUDO_API_KEY"] ?? "",
 });
 
 async function run() {
   try {
-    const result = await sudo.router.create({
-      model: "gpt-4o",
-      messages: [
-        { role: "developer", content: "You are a helpful assistant." },
-        { role: "user", content: "Explain the benefits of error handling." }
-      ],
-      maxCompletionTokens: 250
-    });
+    const result = await sudo.system.getSupportedModels();
 
     console.log(result);
   } catch (error) {
@@ -469,11 +421,7 @@ httpClient.addHook("requestError", (error, request) => {
   console.groupEnd();
 });
 
-const sdk = new Sudo({ 
-  serverURL: "https://sudoapp.dev/api",
-  apiKey: process.env["SUDO_API_KEY"] ?? "",
-  httpClient 
-});
+const sdk = new Sudo({ httpClient });
 ```
 <!-- End Custom HTTP Client [http-client] -->
 
@@ -490,11 +438,7 @@ You can pass a logger that matches `console`'s interface as an SDK option.
 ```typescript
 import { Sudo } from "sudo";
 
-const sdk = new Sudo({ 
-  serverURL: "https://sudoapp.dev/api",
-  apiKey: process.env["SUDO_API_KEY"] ?? "",
-  debugLogger: console 
-});
+const sdk = new Sudo({ debugLogger: console });
 ```
 
 You can also enable a default debug logger by setting an environment variable `SUDO_DEBUG` to true.

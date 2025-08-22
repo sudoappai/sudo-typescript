@@ -1,17 +1,17 @@
 lockVersion: 2.0.0
 id: b050a591-ed84-4aa9-98e8-1a6acbdbbc1c
 management:
-  docChecksum: e7dd06231e1be4f86e68e259547d5d5a
+  docChecksum: 3dfed336234b2667d6893ec7f7cd31ee
   docVersion: 0.1.0
-  speakeasyVersion: 1.592.2
-  generationVersion: 2.668.4
-  releaseVersion: 0.0.2
-  configChecksum: 089ad34eedf6b3e52108dfd3d4587558
+  speakeasyVersion: 1.606.3
+  generationVersion: 2.687.1
+  releaseVersion: 0.0.3
+  configChecksum: b61e04a91f9aac67c97f86f8ea1e72ea
 features:
   typescript:
     additionalDependencies: 0.1.0
     constsAndDefaults: 0.1.12
-    core: 3.21.17
+    core: 3.21.20
     defaultEnabledRetries: 0.1.0
     devContainers: 2.90.0
     enumUnions: 0.1.0
@@ -25,7 +25,7 @@ features:
     responseFormat: 0.2.3
     retries: 2.83.0
     sdkHooks: 0.3.0
-    serverEvents: 0.1.6
+    serverEvents: 0.1.8
     serverEventsSentinels: 0.1.0
     unions: 2.85.11
 generatedFiles:
@@ -41,7 +41,6 @@ generatedFiles:
   - docs/models/chatcompletion.md
   - docs/models/chatcompletionchunk.md
   - docs/models/chatcompletionchunkchoice.md
-  - docs/models/chatcompletionchunkusage.md
   - docs/models/chatcompletiondelta.md
   - docs/models/chatcompletionlist.md
   - docs/models/chatcompletionrequestjson.md
@@ -105,7 +104,12 @@ generatedFiles:
   - docs/models/filet.md
   - docs/models/finishreason.md
   - docs/models/functiont.md
+  - docs/models/imagedata.md
+  - docs/models/imagegeneration.md
+  - docs/models/imagegenerationrequest.md
+  - docs/models/imageinputtokens.md
   - docs/models/imageurl.md
+  - docs/models/imageusage.md
   - docs/models/inputaudio.md
   - docs/models/logprobs.md
   - docs/models/messagecontent.md
@@ -117,16 +121,19 @@ generatedFiles:
   - docs/models/operations/listchatcompletionsrequest.md
   - docs/models/operations/updatechatcompletionrequest.md
   - docs/models/operations/updatechatcompletionrequestbody.md
+  - docs/models/quality.md
+  - docs/models/responseformatenum.md
   - docs/models/returnedchatmessages.md
   - docs/models/role.md
   - docs/models/security.md
+  - docs/models/size.md
+  - docs/models/style.md
   - docs/models/supportedmodel.md
   - docs/models/supportedmodelslist.md
   - docs/models/tool.md
   - docs/models/toolcall.md
   - docs/models/toolcallfunction.md
   - docs/models/usage.md
-  - docs/models/usageunion.md
   - docs/sdks/router/README.md
   - docs/sdks/sudo/README.md
   - docs/sdks/system/README.md
@@ -141,6 +148,7 @@ generatedFiles:
   - src/funcs/routerCreate.ts
   - src/funcs/routerCreateStreaming.ts
   - src/funcs/routerDeleteChatCompletion.ts
+  - src/funcs/routerGenerateImage.ts
   - src/funcs/routerGetChatCompletion.ts
   - src/funcs/routerGetChatCompletionMessages.ts
   - src/funcs/routerListChatCompletions.ts
@@ -189,6 +197,11 @@ generatedFiles:
   - src/models/errors/sudodefaulterror.ts
   - src/models/errors/sudoerror.ts
   - src/models/function.ts
+  - src/models/imagedata.ts
+  - src/models/imagegeneration.ts
+  - src/models/imagegenerationrequest.ts
+  - src/models/imageinputtokens.ts
+  - src/models/imageusage.ts
   - src/models/index.ts
   - src/models/messagecontent.ts
   - src/models/messageresponse.ts
@@ -310,6 +323,17 @@ examples:
       responses:
         "200":
           application/json: {"data": [], "first_id": "<id>", "has_more": false, "last_id": "<id>", "object": "<value>"}
+        "400":
+          application/json: {"error": {"message": "<value>", "type": "<value>"}}
+        "500":
+          application/json: {"error": {"message": "<value>", "type": "<value>"}}
+  generateImage:
+    speakeasy-default-generate-image:
+      requestBody:
+        application/json: {"prompt": "<value>", "model": "PT Cruiser"}
+      responses:
+        "200":
+          application/json: {"data": []}
         "400":
           application/json: {"error": {"message": "<value>", "type": "<value>"}}
         "500":

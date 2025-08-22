@@ -19,14 +19,12 @@
 /.tshy
 /.tshy-*
 /__tests__
-
 # Dependencies
 /node_modules
 /examples/node_modules
 .npm/
 .yarn/
 .pnp.*
-
 # Environment variables
 .env
 .env.local
@@ -37,7 +35,6 @@ venv/
 ENV/
 env.bak/
 venv.bak/
-
 # Logs
 *.log
 npm-debug.log*
@@ -45,42 +42,34 @@ yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
-
 # Runtime data
 pids/
 *.pid
 *.seed
 *.pid.lock
-
 # Coverage directory used by tools like istanbul
 coverage/
 *.lcov
 .nyc_output/
-
 # Temporary folders
 tmp/
 temp/
 .cache/
-
 # IDE files
 .vscode/
 .idea/
 *.swp
 *.swo
 *~
-
 # OS generated files
 .DS_Store
 Thumbs.db
 ehthumbs.db
 Desktop.ini
-
 # Editor backup files
 .#*
 #*#
-
 # Speakeasy
 **/.speakeasy/temp/
 **/.speakeasy/logs/
 /.speakeasy/reports
-
