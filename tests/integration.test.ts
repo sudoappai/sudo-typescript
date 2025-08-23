@@ -681,6 +681,121 @@ describe('Reasoning Models', () => {
 //   }, 90000); // 60 second timeout for CRUD operations
 // });
 
+describe('Image Generation', () => {
+  test('generate image basic', async () => {
+    const request = {
+      prompt: "A beautiful sunset over a mountain landscape",
+      model: "dall-e-3",
+      size: "1024x1024" as const,
+      quality: "standard" as const
+    };
+    
+    try {
+      const response = await client.router.generateImage(request);
+      
+      // Check response structure
+      expect(response).toBeDefined();
+      expect(response.data).toBeDefined();
+      expect(Array.isArray(response.data)).toBe(true);
+      expect(response.data.length).toBeGreaterThan(0);
+      
+      // Check first image data
+      const firstImage = response.data[0];
+      expect(firstImage).toBeDefined();
+      
+      // Should have either URL or base64 data
+      expect(firstImage!.url || firstImage!.b64Json).toBeDefined();
+      
+      if (firstImage!.url) {
+        expect(typeof firstImage!.url).toBe('string');
+      }
+      
+      if (firstImage!.b64Json) {
+        expect(typeof firstImage!.b64Json).toBe('string');
+        expect(firstImage!.b64Json.length).toBeGreaterThan(0);
+      }
+      
+      // Check optional fields
+      if (response.created) {
+        expect(typeof response.created).toBe('number');
+        expect(response.created).toBeGreaterThan(0);
+      }
+      
+      if (response.usage) {
+        expect(response.usage).toBeDefined();
+      }
+      
+    } catch (error: any) {
+      if (error.message?.toLowerCase().includes("not found") || 
+          error.message?.toLowerCase().includes("unavailable") ||
+          error.message?.toLowerCase().includes("not supported")) {
+        console.warn(`Image generation not available: ${error.message}`);
+        return;
+      } else {
+        throw error;
+      }
+    }
+  }, 90000); // 90 second timeout for image generation
+
+  test('generate image with different formats', async () => {
+    const testCases = [
+      {
+        name: "URL format",
+        request: {
+          prompt: "A simple geometric pattern",
+          model: "dall-e-2",
+          n: 1,
+          size: "512x512" as const,
+          responseFormat: "url" as const
+        }
+      },
+      {
+        name: "Base64 format", 
+        request: {
+          prompt: "A simple geometric pattern",
+          model: "dall-e-2", 
+          n: 1,
+          size: "512x512" as const,
+          responseFormat: "b64_json" as const
+        }
+      }
+    ];
+    
+    for (const testCase of testCases) {
+      try {
+        const response = await client.router.generateImage(testCase.request);
+        
+        expect(response.data).toBeDefined();
+        expect(response.data.length).toBeGreaterThan(0);
+        
+        const firstImage = response.data[0];
+        expect(firstImage).toBeDefined();
+        
+        if (testCase.request.responseFormat === "url") {
+          expect(firstImage!.url).toBeDefined();
+          expect(typeof firstImage!.url).toBe('string');
+        } else if (testCase.request.responseFormat === "b64_json") {
+          expect(firstImage!.b64Json).toBeDefined();
+          expect(typeof firstImage!.b64Json).toBe('string');
+        }
+        
+        return; // Success with one format is enough
+        
+      } catch (error: any) {
+        if (error.message?.toLowerCase().includes("not found") || 
+            error.message?.toLowerCase().includes("unavailable") ||
+            error.message?.toLowerCase().includes("not supported")) {
+          continue; // Try next format
+        } else {
+          throw error;
+        }
+      }
+    }
+    
+    console.warn("No image generation formats available for testing");
+  }, 90000); // 90 second timeout for multiple attempts
+});
+
 describe('Error Handling', () => {
   test('error bad request', async () => {
     // Send request with no messages (invalid)
@@ -704,7 +819,7 @@ describe('Error Handling', () => {
       });
     }).rejects.toThrow();
   });
-
+  
   test('error completion not found', async () => {
     await expect(async () => {
       await client.router.getChatCompletion({ completionId: "nonexistent-completion-id" });

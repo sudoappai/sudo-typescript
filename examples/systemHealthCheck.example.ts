@@ -8,7 +8,7 @@ dotenv.config();
  * Example usage of the sudo SDK
  *
  * To run this example from the examples directory:
- * npm run build && npx tsx systemHealthCheck.ts
+ * npm run build && npx tsx systemHealthCheck.example.ts
  */
 
 import { Sudo } from "sudo";

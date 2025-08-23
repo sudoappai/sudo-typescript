@@ -642,6 +642,82 @@
                 ]
             }
         },
+        "/v1/images/generations": {
+            "post": {
+                "tags": [
+                    "router"
+                ],
+                "summary": "Generate Image",
+                "operationId": "generateImage",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ImageGenerationRequest"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Image generated successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ImageGeneration"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    },
+                    "502": {
+                        "description": "Bad gateway error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ErrorResponse"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "api_key": []
+                    }
+                ]
+            }
+        },
         "/v1/models": {
             "get": {
                 "tags": [
@@ -1410,11 +1486,7 @@
                                 "description": "A list of chat completion choices."
                             },
                             "usage": {
-                                "anyOf": [
-                                    {
-                                        "$ref": "#/components/schemas/Usage"
-                                    }
-                                ],
+                                "$ref": "#/components/schemas/Usage",
                                 "nullable": true,
                                 "description": "Usage statistics for the completion request. Only present in the final chunk when stream_options.include_usage is set."
                             }
@@ -1967,6 +2039,199 @@
                         "type": "integer",
                         "format": "int32",
                         "minimum": 0
+                    }
+                }
+            },
+            "ImageGenerationRequest": {
+                "type": "object",
+                "required": [
+                    "prompt",
+                    "model"
+                ],
+                "properties": {
+                    "prompt": {
+                        "type": "string",
+                        "description": "A text description of the desired image(s). The maximum length is 1000 characters for dall-e-2 and 4000 characters for dall-e-3."
+                    },
+                    "model": {
+                        "type": "string",
+                        "description": "The model to use for image generation."
+                    },
+                    "n": {
+                        "type": "integer",
+                        "format": "int32",
+                        "minimum": 1,
+                        "maximum": 10,
+                        "nullable": true,
+                        "description": "The number of images to generate. Must be between 1 and 10. For dall-e-3, only n=1 is supported."
+                    },
+                    "response_format": {
+                        "type": "string",
+                        "enum": ["url", "b64_json"],
+                        "nullable": true,
+                        "description": "The format in which the generated images are returned. Must be one of url or b64_json. URLs are only valid for 60 minutes after the image has been generated."
+                    },
+                    "quality": {
+                        "type": "string",
+                        "enum": ["standard", "hd"],
+                        "nullable": true,
+                        "description": "The quality of the image that will be generated. hd creates images with finer details and greater consistency across the image. This param is only supported for dall-e-3."
+                    },
+                    "size": {
+                        "type": "string",
+                        "enum": ["256x256", "512x512", "1024x1024", "1792x1024", "1024x1792"],
+                        "nullable": true,
+                        "description": "The size of the generated images. Must be one of 256x256, 512x512, or 1024x1024 for dall-e-2. Must be one of 1024x1024, 1792x1024, or 1024x1792 for dall-e-3 models."
+                    },
+                    "style": {
+                        "type": "string",
+                        "enum": ["vivid", "natural"],
+                        "nullable": true,
+                        "description": "The style of the generated images. Must be one of vivid or natural. Vivid causes the model to lean towards generating hyper-real and dramatic images. Natural causes the model to produce more natural, less hyper-real looking images. This param is only supported for dall-e-3."
+                    },
+                    "background": {
+                        "type": "string",
+                        "nullable": true,
+                        "description": "OpenAI only: Specify the background removal for the generated image."
+                    },
+                    "moderation": {
+                        "type": "string",
+                        "nullable": true,
+                        "description": "OpenAI only: Content moderation settings for the image generation."
+                    },
+                    "output_compression": {
+                        "type": "integer",
+                        "format": "int32",
+                        "minimum": 0,
+                        "maximum": 100,
+                        "nullable": true,
+                        "description": "OpenAI only: Compression level for the output image, from 0 to 100."
+                    },
+                    "output_format": {
+                        "type": "string",
+                        "nullable": true,
+                        "description": "OpenAI only: The output format for the generated image."
+                    }
+                }
+            },
+            "ImageGeneration": {
+                "type": "object",
+                "required": [
+                    "data"
+                ],
+                "properties": {
+                    "background": {
+                        "type": "string",
+                        "nullable": true,
+                        "description": "Background settings used in generation (OpenAI only)"
+                    },
+                    "created": {
+                        "type": "integer",
+                        "format": "int64",
+                        "minimum": 0,
+                        "nullable": true,
+                        "description": "The Unix timestamp (in seconds) of when the image was created."
+                    },
+                    "output_format": {
+                        "type": "string",
+                        "nullable": true,
+                        "description": "The output format of the generated image (OpenAI only)"
+                    },
+                    "quality": {
+                        "type": "string",
+                        "nullable": true,
+                        "description": "The quality setting used for generation (OpenAI only)"
+                    },
+                    "size": {
+                        "type": "string",
+                        "nullable": true,
+                        "description": "The size of the generated image (OpenAI only)"
+                    },
+                    "usage": {
+                        "$ref": "#/components/schemas/ImageUsage",
+                        "nullable": true,
+                        "description": "Usage statistics for the image generation request (OpenAI only)"
+                    },
+                    "data": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/ImageData"
+                        },
+                        "description": "The list of generated images."
+                    }
+                }
+            },
+            "ImageData": {
+                "type": "object",
+                "properties": {
+                    "b64_json": {
+                        "type": "string",
+                        "nullable": true,
+                        "description": "The base64-encoded JSON of the generated image, if response_format is b64_json."
+                    },
+                    "revised_prompt": {
+                        "type": "string",
+                        "nullable": true,
+                        "description": "The prompt that was used to generate the image, if there was any revision to the prompt."
+                    },
+                    "url": {
+                        "type": "string",
+                        "nullable": true,
+                        "description": "The URL of the generated image, if response_format is url (default)."
+                    }
+                }
+            },
+            "ImageUsage": {
+                "type": "object",
+                "required": [
+                    "input_tokens",
+                    "input_tokens_details",
+                    "output_tokens",
+                    "total_tokens"
+                ],
+                "properties": {
+                    "input_tokens": {
+                        "type": "integer",
+                        "format": "int32",
+                        "minimum": 0,
+                        "description": "Number of tokens in the input prompt."
+                    },
+                    "input_tokens_details": {
+                        "$ref": "#/components/schemas/ImageInputTokens",
+                        "description": "Breakdown of input tokens by type."
+                    },
+                    "output_tokens": {
+                        "type": "integer",
+                        "format": "int32",
+                        "minimum": 0,
+                        "description": "Number of tokens used for the generated image."
+                    },
+                    "total_tokens": {
+                        "type": "integer",
+                        "format": "int32",
+                        "minimum": 0,
+                        "description": "Total number of tokens used in the request (input + output)."
+                    }
+                }
+            },
+            "ImageInputTokens": {
+                "type": "object",
+                "required": [
+                    "image_tokens",
+                    "text_tokens"
+                ],
+                "properties": {
+                    "image_tokens": {
+                        "type": "integer",
+                        "format": "int32",
+                        "minimum": 0,
+                        "description": "Number of tokens used for image processing."
+                    },
+                    "text_tokens": {
+                        "type": "integer",
+                        "format": "int32",
+                        "minimum": 0,
+                        "description": "Number of tokens used for text processing."
                     }
                 }
             }

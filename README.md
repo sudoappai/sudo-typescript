@@ -183,6 +183,7 @@ run();
 * [updateChatCompletion](docs/sdks/router/README.md#updatechatcompletion) - *[OpenAI Only]* Update a Chat Completion with some metadata. Only Chat Completions that have been stored with the `store` parameter set to true will be returned.
 * [deleteChatCompletion](docs/sdks/router/README.md#deletechatcompletion) - *[OpenAI Only]* Delete a stored Chat Completion. Only Chat Completions that have been stored with the `store` parameter set to true will be returned.
 * [getChatCompletionMessages](docs/sdks/router/README.md#getchatcompletionmessages) - *[OpenAI Only]* Get the array of messages for a saved Chat Completion. Only Chat Completions that have been stored with the `store` parameter set to true will be returned.
+* [generateImage](docs/sdks/router/README.md#generateimage) - Generate Image
 
 
 ### [system](docs/sdks/system/README.md)
@@ -211,6 +212,7 @@ To read more about standalone functions, check [FUNCTIONS.md](./FUNCTIONS.md).
 - [`routerCreate`](docs/sdks/router/README.md#create) - Create a model response for the given string of prompts.
 - [`routerCreateStreaming`](docs/sdks/router/README.md#createstreaming) - Create a streaming model response for the given string of prompts using server-sent events.
 - [`routerDeleteChatCompletion`](docs/sdks/router/README.md#deletechatcompletion) - *[OpenAI Only]* Delete a stored Chat Completion. Only Chat Completions that have been stored with the `store` parameter set to true will be returned.
+- [`routerGenerateImage`](docs/sdks/router/README.md#generateimage) - Generate Image
 - [`routerGetChatCompletion`](docs/sdks/router/README.md#getchatcompletion) - *[OpenAI Only]* Get a Chat Completion. Only Chat Completions that have been stored with the `store` parameter set to true will be returned.
 - [`routerGetChatCompletionMessages`](docs/sdks/router/README.md#getchatcompletionmessages) - *[OpenAI Only]* Get the array of messages for a saved Chat Completion. Only Chat Completions that have been stored with the `store` parameter set to true will be returned.
 - [`routerListChatCompletions`](docs/sdks/router/README.md#listchatcompletions) - *[OpenAI Only]* Get a list of saved Chat Completions. Only Chat Completions that have been stored with the `store` parameter set to true will be returned.
