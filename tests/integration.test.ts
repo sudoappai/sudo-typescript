@@ -185,11 +185,19 @@ describe('Basic Chat Completions', () => {
           error.message?.toLowerCase().includes("unavailable")) {
         console.warn(`Model ${modelName} not available: ${error.message}`);
         return; // Skip this test
-      } else {
-        throw error;
       }
+      
+      // Handle 503 overloaded errors from providers (especially Anthropic)
+      if (error.message?.includes("Status 503") && 
+          (error.message?.includes("overloaded_error") || 
+           error.message?.includes("upstream_rate_limited"))) {
+        console.warn(`Model ${modelName} temporarily overloaded (503): ${error.message}`);
+        return; // Skip this test gracefully
+      }
+      
+      throw error;
     }
-  }, 90000); // 90 second timeout for each model test
+  }, 120000); // 120 second timeout for each model test
 });
 
 describe('Streaming Completions', () => {
@@ -274,11 +282,19 @@ describe('Streaming Completions', () => {
           error.message?.toLowerCase().includes("unavailable")) {
         console.warn(`Model ${modelName} not available: ${error.message}`);
         return;
-      } else {
-        throw error;
       }
+      
+      // Handle 503 overloaded errors from providers (especially Anthropic)
+      if (error.message?.includes("Status 503") && 
+          (error.message?.includes("overloaded_error") || 
+           error.message?.includes("upstream_rate_limited"))) {
+        console.warn(`Model ${modelName} temporarily overloaded (503): ${error.message}`);
+        return; // Skip this test gracefully
+      }
+      
+      throw error;
     }
-  }, 90000);
+  }, 120000);
 });
 
 describe('Tool Calling', () => {
@@ -370,14 +386,22 @@ describe('Tool Calling', () => {
         if (error.message?.toLowerCase().includes("not found") || 
             error.message?.toLowerCase().includes("unavailable")) {
           continue; // Try next model
-        } else {
-          throw error;
         }
+        
+        // Handle 503 overloaded errors from providers (especially Anthropic)
+        if (error.message?.includes("Status 503") && 
+            (error.message?.includes("overloaded_error") || 
+             error.message?.includes("upstream_rate_limited"))) {
+          console.warn(`Model ${modelName} temporarily overloaded (503): ${error.message}`);
+          continue; // Try next model
+        }
+        
+        throw error;
       }
     }
     
     throw new Error("No supported models available for tool calling");
-  }, 30000);
+  }, 60000);
 });
 
 describe('Image Input', () => {
@@ -427,11 +451,19 @@ describe('Image Input', () => {
           error.message?.toLowerCase().includes("unavailable")) {
         console.warn(`Vision model not available: ${error.message}`);
         return;
-      } else {
-        throw error;
       }
+      
+      // Handle 503 overloaded errors from providers (especially Anthropic)
+      if (error.message?.includes("Status 503") && 
+          (error.message?.includes("overloaded_error") || 
+           error.message?.includes("upstream_rate_limited"))) {
+        console.warn(`Vision model temporarily overloaded (503): ${error.message}`);
+        return; // Skip this test gracefully
+      }
+      
+      throw error;
     }
-  }, 30000);
+  }, 60000);
 });
 
 describe('Structured Output', () => {
@@ -505,11 +537,19 @@ describe('Structured Output', () => {
           error.message?.toLowerCase().includes("unavailable")) {
         console.warn(`Structured output not available: ${error.message}`);
         return;
-      } else {
-        throw error;
       }
+      
+      // Handle 503 overloaded errors from providers (especially Anthropic)
+      if (error.message?.includes("Status 503") && 
+          (error.message?.includes("overloaded_error") || 
+           error.message?.includes("upstream_rate_limited"))) {
+        console.warn(`Structured output model temporarily overloaded (503): ${error.message}`);
+        return; // Skip this test gracefully
+      }
+      
+      throw error;
     }
-  }, 30000);
+  }, 60000);
 });
 
 describe('Reasoning Models', () => {
@@ -546,11 +586,19 @@ describe('Reasoning Models', () => {
           error.message?.toLowerCase().includes("unavailable")) {
         console.warn(`Reasoning model not available: ${error.message}`);
         return;
-      } else {
-        throw error;
       }
+      
+      // Handle 503 overloaded errors from providers (especially Anthropic)
+      if (error.message?.includes("Status 503") && 
+          (error.message?.includes("overloaded_error") || 
+           error.message?.includes("upstream_rate_limited"))) {
+        console.warn(`Reasoning model temporarily overloaded (503): ${error.message}`);
+        return; // Skip this test gracefully
+      }
+      
+      throw error;
     }
-  }, 30000);
+  }, 60000);
 });
 
 // describe('Stored Completions', () => {
@@ -731,11 +779,25 @@ describe('Image Generation', () => {
           error.message?.toLowerCase().includes("not supported")) {
         console.warn(`Image generation not available: ${error.message}`);
         return;
-      } else {
-        throw error;
       }
+      
+      // Handle 502 bad gateway errors from image generation
+      if (error.message?.includes("Status 502")) {
+        console.warn(`Image generation service temporarily unavailable (502): ${error.message}`);
+        return; // Skip this test gracefully
+      }
+      
+      // Handle 503 overloaded errors from providers
+      if (error.message?.includes("Status 503") && 
+          (error.message?.includes("overloaded_error") || 
+           error.message?.includes("upstream_rate_limited"))) {
+        console.warn(`Image generation temporarily overloaded (503): ${error.message}`);
+        return; // Skip this test gracefully
+      }
+      
+      throw error;
     }
-  }, 90000); // 90 second timeout for image generation
+  }, 120000); // 120 second timeout for image generation
 
   test('generate image with different formats', async () => {
     const testCases = [
@@ -786,14 +848,28 @@ describe('Image Generation', () => {
             error.message?.toLowerCase().includes("unavailable") ||
             error.message?.toLowerCase().includes("not supported")) {
           continue; // Try next format
-        } else {
-          throw error;
         }
+        
+        // Handle 502 bad gateway errors from image generation
+        if (error.message?.includes("Status 502")) {
+          console.warn(`Image generation service temporarily unavailable (502): ${error.message}`);
+          continue; // Try next format
+        }
+        
+        // Handle 503 overloaded errors from providers
+        if (error.message?.includes("Status 503") && 
+            (error.message?.includes("overloaded_error") || 
+             error.message?.includes("upstream_rate_limited"))) {
+          console.warn(`Image generation temporarily overloaded (503): ${error.message}`);
+          continue; // Try next format
+        }
+        
+        throw error;
       }
     }
     
     console.warn("No image generation formats available for testing");
-  }, 90000); // 90 second timeout for multiple attempts
+  }, 120000); // 120 second timeout for multiple attempts
 });
 
 describe('Error Handling', () => {
