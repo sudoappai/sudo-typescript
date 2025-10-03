@@ -73,3 +73,4 @@ Desktop.ini
 **/.speakeasy/temp/
 **/.speakeasy/logs/
 /.speakeasy/reports
+tests/debug-stream.ts
