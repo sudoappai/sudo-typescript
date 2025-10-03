@@ -57,7 +57,7 @@ export type Data = {
    * A list of chat completion choices.
    */
   choices: Array<ChatCompletionChunkChoice>;
-  usage?: Usage | undefined;
+  usage?: Usage | null | undefined;
 };
 
 export type ChatCompletionChunk = {
@@ -92,7 +92,7 @@ export const Data$inboundSchema: z.ZodType<Data, z.ZodTypeDef, unknown> = z
     model: z.string(),
     system_fingerprint: z.nullable(z.string()).optional(),
     choices: z.array(ChatCompletionChunkChoice$inboundSchema),
-    usage: Usage$inboundSchema.optional(),
+    usage: z.nullable(Usage$inboundSchema).optional(),
   }).transform((v) => {
     return remap$(v, {
       "system_fingerprint": "systemFingerprint",
@@ -107,7 +107,7 @@ export type Data$Outbound = {
   model: string;
   system_fingerprint?: string | null | undefined;
   choices: Array<ChatCompletionChunkChoice$Outbound>;
-  usage?: Usage$Outbound | undefined;
+  usage?: Usage$Outbound | null | undefined;
 };
 
 /** @internal */
@@ -119,7 +119,7 @@ export const Data$outboundSchema: z.ZodType<Data$Outbound, z.ZodTypeDef, Data> =
     model: z.string(),
     systemFingerprint: z.nullable(z.string()).optional(),
     choices: z.array(ChatCompletionChunkChoice$outboundSchema),
-    usage: Usage$outboundSchema.optional(),
+    usage: z.nullable(Usage$outboundSchema).optional(),
   }).transform((v) => {
     return remap$(v, {
       systemFingerprint: "system_fingerprint",
