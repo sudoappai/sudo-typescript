@@ -113,11 +113,6 @@ function parseMessage<T extends ServerEvent<unknown>>(
   parse: (x: ServerEvent<string>) => IteratorResult<T, undefined>,
 ) {
   const text = new TextDecoder().decode(chunk);
-  
-  // DEBUG: Log the raw SSE message text
-  console.log('[SDK DEBUG] Raw SSE message text:', JSON.stringify(text));
-  console.log('[SDK DEBUG] Raw SSE message (visible):', text);
-  
   const lines = text.split(/\r\n|\r|\n/);
   const dataLines: string[] = [];
   const ret: ServerEvent<string> = {};
@@ -138,9 +133,5 @@ function parseMessage<T extends ServerEvent<unknown>>(
   }
   if (ignore) return;
   if (dataLines.length) ret.data = dataLines.join("\n");
-  
-  // DEBUG: Log the parsed ServerEvent object
-  console.log('[SDK DEBUG] Parsed ServerEvent:', JSON.stringify(ret, null, 2));
-  
   return parse(ret);
 }
