@@ -53,6 +53,9 @@ else
   NEW_VERSION=$(npm version $VERSION_TYPE --no-git-tag-version)
 fi
 
+# Strip 'v' prefix if present (npm version returns with 'v' prefix)
+NEW_VERSION=${NEW_VERSION#v}
+
 echo "📝 Updated to version $NEW_VERSION"
 
 # Commit version bump
@@ -76,5 +79,20 @@ fi
 # Push changes
 echo "🔄 Pushing to git..."
 git push origin main --tags
+
+# Create GitHub Release (if gh CLI is available)
+if command -v gh &> /dev/null; then
+  echo "📝 Creating GitHub Release..."
+  read -p "Enter release notes (or press Enter to skip): " RELEASE_NOTES
+  if [ -n "$RELEASE_NOTES" ]; then
+    gh release create "v$NEW_VERSION" --title "v$NEW_VERSION" --notes "$RELEASE_NOTES"
+  else
+    gh release create "v$NEW_VERSION" --title "v$NEW_VERSION" --generate-notes
+  fi
+else
+  echo "⚠️  GitHub CLI (gh) not installed. Skipping GitHub Release creation."
+  echo "   Install with: brew install gh"
+  echo "   Or create release manually at: https://github.com/sudoappai/sudo-typescript/releases/new"
+fi
 
 echo "✅ Release complete! Published version $NEW_VERSION" 
