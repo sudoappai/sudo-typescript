@@ -159,15 +159,7 @@ async function $do(
       200,
       z.instanceof(ReadableStream<Uint8Array>).transform(stream => {
         return new EventStream(stream, rawEvent => {
-          // DEBUG: Log all raw events
-          console.log('[SDK DEBUG] Raw SSE event received:', JSON.stringify(rawEvent, null, 2));
-          console.log('[SDK DEBUG] rawEvent.data type:', typeof rawEvent.data);
-          console.log('[SDK DEBUG] rawEvent.data value:', rawEvent.data);
-          
-          if (rawEvent.data === "[DONE]") {
-            console.log('[SDK DEBUG] ✓ [DONE] marker detected! Stream will close.');
-            return { done: true };
-          }
+          if (rawEvent.data === "[DONE]") return { done: true };
           return {
             value: models.ChatCompletionChunk$inboundSchema.parse(rawEvent),
           };
