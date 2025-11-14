@@ -872,6 +872,147 @@ describe('Image Generation', () => {
   }, 120000); // 120 second timeout for multiple attempts
 });
 
+describe('Responses API', () => {
+  test('create response basic', async () => {
+    try {
+      const response = await client.responses.createResponse({
+        model: "gpt-4o",
+        instructions: "You are a helpful assistant.",
+        input: "Hello! Give me a study plan to learn Python.",
+        stream: false
+      });
+      
+      // Check response structure
+      expect(response).toBeDefined();
+      expect(response.id).toBeDefined();
+      expect(typeof response.id).toBe('string');
+      expect(response.id.length).toBeGreaterThan(0);
+      
+      // Check output
+      expect(response.output).toBeDefined();
+      expect(response.output).not.toBeNull();
+      
+      // The output could be a list or a single item depending on the API response
+      if (Array.isArray(response.output)) {
+        expect(response.output.length).toBeGreaterThan(0);
+        // Check first output item - it should have content
+        const firstOutput = response.output[0];
+        expect(firstOutput).toBeDefined();
+      }
+      
+      // Check usage if available
+      if (response.usage) {
+        expect(response.usage.inputTokens).toBeDefined();
+        expect(typeof response.usage.inputTokens).toBe('number');
+        expect(response.usage.inputTokens).toBeGreaterThan(0);
+        
+        expect(response.usage.outputTokens).toBeDefined();
+        expect(typeof response.usage.outputTokens).toBe('number');
+        expect(response.usage.outputTokens).toBeGreaterThan(0);
+      }
+      
+    } catch (error: any) {
+      // Handle provider errors gracefully
+      if (error.message?.toLowerCase().includes("not found") || 
+          error.message?.toLowerCase().includes("unavailable")) {
+        console.warn(`Responses API not available: ${error.message}`);
+        return;
+      }
+      
+      // Handle 503 overloaded errors from providers
+      if (error.message?.includes("Status 503") && 
+          (error.message?.includes("overloaded_error") || 
+           error.message?.includes("upstream_rate_limited"))) {
+        console.warn(`Responses API temporarily overloaded (503): ${error.message}`);
+        return;
+      }
+      
+      throw error;
+    }
+  }, 60000);
+});
+
+describe('Streaming Responses API', () => {
+  test('create streaming response', async () => {
+    /**
+     * This test validates:
+     * 1. Stream returns ResponseEvent objects
+     * 2. Events contain delta fields for streaming content
+     * 3. We receive actual AI-generated content in the stream
+     */
+    try {
+      const stream = await client.responses.createStreamingResponse({
+        model: "gpt-4o",
+        instructions: "You are a helpful assistant.",
+        input: "Hello! Give me a list of all the planets in the solar system, with a few sentences about each.",
+        stream: true
+      });
+      
+      let eventsReceived = 0;
+      let contentReceived = "";
+      let deltaEvents = 0;
+      
+      for await (const event of stream) {
+        eventsReceived++;
+        
+        // Check event structure
+        expect(event).toBeDefined();
+        expect(event.data).toBeDefined();
+        
+        // Access the event data
+        const eventData = event.data;
+        
+        // Get event type and check for delta content
+        const eventType = eventData.type;
+        expect(eventType).toBeDefined();
+        expect(typeof eventType).toBe('string');
+        
+        // The Responses API sends delta events with type "response.output_text.delta"
+        if (eventType === 'response.output_text.delta') {
+          deltaEvents++;
+          
+          // Access delta from additional properties
+          if (eventData.additionalProperties) {
+            const delta = eventData.additionalProperties['delta'];
+            if (delta && typeof delta === 'string') {
+              contentReceived += delta;
+            }
+          }
+        }
+      }
+      
+      // Verify we received events and some content
+      expect(eventsReceived).toBeGreaterThan(0);
+      expect(deltaEvents).toBeGreaterThan(0);
+      expect(contentReceived.length).toBeGreaterThan(0);
+      
+      // Verify the content makes sense (should mention planets)
+      const contentLower = contentReceived.toLowerCase();
+      const planets = ['mercury', 'venus', 'earth', 'mars'];
+      const hasPlanetMention = planets.some(planet => contentLower.includes(planet));
+      expect(hasPlanetMention).toBe(true);
+      
+    } catch (error: any) {
+      // Handle provider errors gracefully
+      if (error.message?.toLowerCase().includes("not found") || 
+          error.message?.toLowerCase().includes("unavailable")) {
+        console.warn(`Streaming Responses API not available: ${error.message}`);
+        return;
+      }
+      
+      // Handle 503 overloaded errors from providers
+      if (error.message?.includes("Status 503") && 
+          (error.message?.includes("overloaded_error") || 
+           error.message?.includes("upstream_rate_limited"))) {
+        console.warn(`Streaming Responses API temporarily overloaded (503): ${error.message}`);
+        return;
+      }
+      
+      throw error;
+    }
+  }, 120000); // 120 second timeout for streaming
+});
+
 describe('Error Handling', () => {
   test('error bad request', async () => {
     // Send request with no messages (invalid)
