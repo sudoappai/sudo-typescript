@@ -54,7 +54,7 @@ class SudoTestConfig {
     // Test models with their capabilities
     this.testModels = {
       "gpt-4o": { hasId: true, hasCreated: true, supportsTools: true, supportsVision: true },
-      "claude-3-5-sonnet-20241022": { hasId: true, hasCreated: true, supportsTools: true, supportsVision: true },
+      "claude-3-7-sonnet-20250219": { hasId: true, hasCreated: true, supportsTools: true, supportsVision: true },
       "deepseek-chat": { hasId: true, hasCreated: true, supportsTools: false, supportsVision: false },
       "grok-3": { hasId: true, hasCreated: true, supportsTools: false, supportsVision: false },
       "gemini-2.0-flash": { hasId: false, hasCreated: false, supportsTools: true, supportsVision: true },
@@ -113,7 +113,7 @@ describe('System Methods', () => {
 });
 
 describe('Basic Chat Completions', () => {
-  const testModels = ["gpt-4o", "claude-3-5-sonnet-20241022", "deepseek-chat", "grok-3", "gemini-2.0-flash"];
+  const testModels = ["gpt-4o", "claude-3-7-sonnet-20250219", "deepseek-chat", "grok-3", "gemini-2.0-flash"];
   
   test.each(testModels)('create chat completion basic - %s', async (modelName) => {
     const modelConfig = config.testModels[modelName] || { hasId: true, hasCreated: true, supportsTools: false, supportsVision: false };
@@ -201,7 +201,7 @@ describe('Basic Chat Completions', () => {
 });
 
 describe('Streaming Completions', () => {
-  const testModels = ["gpt-4o", "claude-3-5-sonnet-20241022", "deepseek-chat", "grok-3", "gemini-2.0-flash"];
+  const testModels = ["gpt-4o", "claude-3-7-sonnet-20250219", "deepseek-chat", "grok-3", "gemini-2.0-flash"];
   
     test.each(testModels)('create chat completion streaming - %s', async (modelName) => {
     const messages = [
@@ -300,7 +300,7 @@ describe('Streaming Completions', () => {
 describe('Tool Calling', () => {
   test('create chat completion tool call', async () => {
     // Only test with models that support tools
-    const supportedModels = ["gpt-4o", "claude-3-5-sonnet-20241022"];
+    const supportedModels = ["gpt-4o", "claude-3-7-sonnet-20250219"];
     
     for (const modelName of supportedModels) {
       const messages = [
