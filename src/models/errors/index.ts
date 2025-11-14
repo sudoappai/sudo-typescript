@@ -7,3 +7,4 @@ export * from "./httpclienterrors.js";
 export * from "./responsevalidationerror.js";
 export * from "./sdkvalidationerror.js";
 export * from "./sudodefaulterror.js";
+export * from "./sudoerror.js";

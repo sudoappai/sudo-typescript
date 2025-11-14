@@ -35,6 +35,7 @@ Developer-friendly & type-safe Typescript SDK specifically catered to leverage *
   - [Authentication](#authentication)
     - [Per-Client Security Schemes](#per-client-security-schemes)
   - [Available Resources and Operations](#available-resources-and-operations)
+    - [responses](#responses)
     - [router](#router)
     - [system](#system)
   - [Standalone functions](#standalone-functions)
@@ -174,6 +175,11 @@ run();
 <details open>
 <summary>Available methods</summary>
 
+### [responses](docs/sdks/responses/README.md)
+
+* [createResponse](docs/sdks/responses/README.md#createresponse) - *[OpenAI Only]* Responses API: Create a model response for the given input
+* [createStreamingResponse](docs/sdks/responses/README.md#createstreamingresponse) - *[OpenAI Only]* Responses API: Create a streaming model response for the given input using server-sent events.
+
 ### [router](docs/sdks/router/README.md)
 
 * [listChatCompletions](docs/sdks/router/README.md#listchatcompletions) - *[OpenAI Only]* Get a list of saved Chat Completions. Only Chat Completions that have been stored with the `store` parameter set to true will be returned.
@@ -209,6 +215,8 @@ To read more about standalone functions, check [FUNCTIONS.md](./FUNCTIONS.md).
 
 <summary>Available standalone functions</summary>
 
+- [`responsesCreateResponse`](docs/sdks/responses/README.md#createresponse) - *[OpenAI Only]* Responses API: Create a model response for the given input
+- [`responsesCreateStreamingResponse`](docs/sdks/responses/README.md#createstreamingresponse) - *[OpenAI Only]* Responses API: Create a streaming model response for the given input using server-sent events.
 - [`routerCreate`](docs/sdks/router/README.md#create) - Create a model response for the given string of prompts.
 - [`routerCreateStreaming`](docs/sdks/router/README.md#createstreaming) - Create a streaming model response for the given string of prompts using server-sent events.
 - [`routerDeleteChatCompletion`](docs/sdks/router/README.md#deletechatcompletion) - *[OpenAI Only]* Delete a stored Chat Completion. Only Chat Completions that have been stored with the `store` parameter set to true will be returned.

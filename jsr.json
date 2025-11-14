@@ -1,8 +1,8 @@
 
 
 {
-  "name": "sudo-ai",
-  "version": "0.1.1",
+  "name": "sudo",
+  "version": "0.3.0",
   "exports": {
     ".": "./src/index.ts",    
     "./models/errors": "./src/models/errors/index.ts",    

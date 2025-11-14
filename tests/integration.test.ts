@@ -61,7 +61,7 @@ class SudoTestConfig {
     };
     
     // Image URL for vision tests
-    this.testImageUrl = "https://upload.wikimedia.org/wikipedia/en/thumb/f/f7/RickRoll.png/330px-RickRoll.png";
+    this.testImageUrl = "https://upload.wikimedia.org/wikipedia/en/f/f7/RickRoll.png";
   }
 
   getClient(): Sudo {

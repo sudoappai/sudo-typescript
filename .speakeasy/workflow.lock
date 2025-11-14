@@ -1,9 +1,9 @@
-speakeasyVersion: 1.606.3
+speakeasyVersion: 1.656.2
 sources:
     sudo-api:
         sourceNamespace: sudo-api
-        sourceRevisionDigest: sha256:bab3f7ad6b6bc603a4279d0f213bd244d735f0a871a27aa9984287d33147e23e
-        sourceBlobDigest: sha256:bffe33b9ce554a7af152fb230f2f9d580b124a8994fc40c229f7eaeaa7570255
+        sourceRevisionDigest: sha256:365c26cf730cf39222a6f0e2fcbaa605be29c85dab34c3dd6e9a1355f821df84
+        sourceBlobDigest: sha256:763d8c2f6aabbf2f2151d975c9bda4e6421e30d315231d762f769d21909228aa
         tags:
             - latest
             - 0.1.0
@@ -11,8 +11,8 @@ targets:
     sudo:
         source: sudo-api
         sourceNamespace: sudo-api
-        sourceRevisionDigest: sha256:bab3f7ad6b6bc603a4279d0f213bd244d735f0a871a27aa9984287d33147e23e
-        sourceBlobDigest: sha256:bffe33b9ce554a7af152fb230f2f9d580b124a8994fc40c229f7eaeaa7570255
+        sourceRevisionDigest: sha256:365c26cf730cf39222a6f0e2fcbaa605be29c85dab34c3dd6e9a1355f821df84
+        sourceBlobDigest: sha256:763d8c2f6aabbf2f2151d975c9bda4e6421e30d315231d762f769d21909228aa
 workflow:
     workflowVersion: 1.0.0
     speakeasyVersion: latest
