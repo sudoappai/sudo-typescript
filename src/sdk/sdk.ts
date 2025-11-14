@@ -3,6 +3,7 @@
  */
 
 import { ClientSDK } from "../lib/sdks.js";
+import { Responses } from "./responses.js";
 import { Router } from "./router.js";
 import { System } from "./system.js";
 
@@ -15,5 +16,10 @@ export class Sudo extends ClientSDK {
   private _router?: Router;
   get router(): Router {
     return (this._router ??= new Router(this._options));
+  }
+
+  private _responses?: Responses;
+  get responses(): Responses {
+    return (this._responses ??= new Responses(this._options));
   }
 }

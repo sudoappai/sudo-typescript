@@ -19,7 +19,7 @@ const sudo = new Sudo({
 });
 
 async function main() {
-  const result = await sudo.healthCheck();
+  const result = await sudo.system.healthCheck();
 
   console.log(result);
 }
